@@ -1,10 +1,18 @@
 {
-	"pages": [{
-		"path": "src/pages/index/index",
-		"style": {
-			"navigationBarTitleText": "Area"
+	"pages": [
+		{
+			"path": "src/pages/Login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "src/pages/Register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
 		}
-	}],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

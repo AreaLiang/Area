@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
 		<Login></Login>
+		
 	</view>
 </template>
 
@@ -14,7 +15,7 @@
 			}
 		},
 		components: {
-			Login	
+			Login
 		}
 	}
 </script>

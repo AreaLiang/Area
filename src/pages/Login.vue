@@ -24,7 +24,7 @@
 		</view>
 		<view class="bottom">
 			<loginType></loginType>		
-			<navigator url="#">注册</navigator>
+			<navigator animation-duration="300" url="./Register" >注册</navigator>
 			<uni-icons custom-prefix="iconfont" type="icon-dian" class="dian" size="15"></uni-icons>
 			<navigator url="#">隐私设置</navigator>
 			<uni-icons custom-prefix="iconfont" type="icon-dian" class="dian" size="15"></uni-icons>
