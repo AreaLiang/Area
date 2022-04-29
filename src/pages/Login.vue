@@ -1,10 +1,7 @@
 <template>
 	<view class="login">
 		<view class="title">
-			<view class="title-text">
-				<img src="@/static/logo.png" class="logo x-md" alt="">
-				<span class="x-md">账号登录</span>
-			</view>
+			<logoTitle titleText="账号登录"></logoTitle>
 			<view class="tip">登录表示同意“<navigator url="#">用户协议</navigator>”和“<navigator url="#">隐私政策</navigator>”</view>
 		</view>
 		<view class="login-form">
@@ -37,6 +34,7 @@
 
 <script>
 	import loginType from '@/components/loginType'
+	import logoTitle from '@/components/logoTitle'
 	export default {
 		name: 'Login',
 		data() {
@@ -70,7 +68,8 @@
 			}
 		},
 		components:{
-			loginType
+			loginType,
+			logoTitle
 		}
 	}
 </script>
@@ -81,21 +80,6 @@
 		margin: 25px;
 		height: 95%;
 		position: relative;
-		.title-text {
-			font-size: 6vw;
-			font-weight: 500;
-			display: block;
-			letter-spacing: 2px;
-		}
-		
-		.logo{
-			width: 7.5vw;
-			height: 7.5vw;
-		}
-		.x-md{
-			vertical-align: middle;
-			margin: 0 3px;
-		}
 		
 		.tip {
 			color: #9b9999;

@@ -12,11 +12,13 @@
 		<svg class="icon" aria-hidden="true">
 			<use xlink:href="#icon-pingguo"></use>
 		</svg>
+		
 	</view>
 </template>
 
 <script>
 	import '@/static/iconfont.js'
+
 	export default {
 		name: "loginType",
 		data() {

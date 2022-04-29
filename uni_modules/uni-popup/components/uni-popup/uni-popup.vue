@@ -5,7 +5,7 @@
 				:duration="duration" :show="showTrans" @click="onTap" />
 			<uni-transition key="2" :mode-class="ani" name="content" :styles="transClass" :duration="duration"
 				:show="showTrans" @click="onTap">
-				<view class="uni-popup__wrapper" :style="{ backgroundColor: bg }" :class="[popupstyle]" @click="clear">
+				<view class="uni-popup__wrapper" :style="{ backgroundColor: bg , 'overflow': OF}" :class="[popupstyle]" @click="clear">
 					<slot />
 				</view>
 			</uni-transition>
@@ -77,6 +77,10 @@
 			backgroundColor: {
 				type: String,
 				default: 'none'
+			},
+			overflow:{
+				type: String,
+				default: 'auto'
 			},
 			safeArea: {
 				type: Boolean,
@@ -175,6 +179,12 @@
 					return 'transparent'
 				}
 				return this.backgroundColor
+			},
+			OF(){
+				if (this.overflow === '' || this.overflow === 'none') {
+					return 'auto'
+				}
+				return this.overflow
 			}
 		},
 		mounted() {
