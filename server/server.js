@@ -65,9 +65,10 @@ app.get('/areaList', (req, res) => {
 
 //登录
 app.post('/login',(req,res)=>{
-	let token = createToken('', 60);
+	let token = createToken('', 600);
 	
 	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
+		
 		let postData = new resFun(req.body, "成功");
 		
 		let userInfo = Mock.mock({
@@ -94,6 +95,43 @@ app.post('/login',(req,res)=>{
 	} else {
 		res.send(postData.fail("账号或者密码错误"));
 	}
+})
+
+//登录
+app.post('/checkInfo',(req,res)=>{
+	console.log(tokenExp({...req.headers}.authorization).time)
+	let token={...req.headers}.authorization;
+	if(tokenExp(token).value){
+			let postData = new resFun(req.body, "成功");
+			let userInfo = Mock.mock({
+				"aa|5": [{
+					"number|1-100": 60,
+					"city|1": {
+						"310000": "上海市",
+						"320000": "江苏省",
+						"330000": "浙江省",
+						"340000": "安徽省",
+						"350000": "广东省",
+						"360000": "湖北省"
+					},
+					'phone|1': "req.body.userId",
+					'data': '@datetime',
+					'id': '@increment'
+				}]
+			})
+			
+			postData.data = Object.assign(postData.data, userInfo);
+			postData.token = token;
+			
+			
+			setTimeout(()=>{
+				res.send(postData);
+			},500)
+	}else{
+		let postData = new resFun();
+		res.send(postData.fail("账号或者密码错误"));
+	}
+
 })
 
 let server = app.listen(5000, () => {
@@ -155,5 +193,10 @@ let verifyToken = function(token) {
 function tokenExp(token) {
 	let verify = verifyToken(token);
 	let time = parseInt((new Date().getTime()) / 1000);
-	return `剩余${verify.obj.exp - time}秒`
+	
+	let res={
+		'value':verify.obj.exp - time,
+		'time':`剩余${verify.obj.exp - time}秒`
+	}
+	return res;
 }

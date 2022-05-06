@@ -53,7 +53,7 @@
 
 <script>
 	import logoTitle from '@/components/logoTitle'
-	import {areaListApi} from '@/request/api'
+	import {areaListApi,checkInfoApi} from '@/request/api'
 	import {nav} from '../router'
 	
 	export default {

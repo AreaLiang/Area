@@ -70,7 +70,6 @@
 			login(ref) {
 				this.$refs['loginForm'].validate().then(res => {
 					loginApi(this.loginFormData).then((res)=>{
-						console.log(res)
 						if(res.code=="200"){
 							localStorage.setItem('token',res.token);
 							this.$store.commit('LoginInfo',res);
