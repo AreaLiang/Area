@@ -6,8 +6,8 @@
 		</view>
 		<view class="login-form">
 			<uni-forms ref="loginForm" :rules="rules" :modelValue="loginFormData">
-				<uni-forms-item name="account">
-					<uni-easyinput prefixIcon="phone-filled" v-model="loginFormData.account" trim="all"
+				<uni-forms-item name="userId">
+					<uni-easyinput prefixIcon="phone-filled" v-model="loginFormData.userId" trim="all"
 						placeholder="手机/邮箱"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="password">
@@ -29,23 +29,29 @@
 			<uni-icons custom-prefix="iconfont" type="icon-dian" class="dian" size="15"></uni-icons>
 			<navigator url="#">找回密码</navigator>
 		</view>
+		<uni-popup ref="popup" type="message">
+			<uni-popup-message type="error" message="登录失败" :duration="2000"></uni-popup-message>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import loginType from '@/components/loginType'
 	import logoTitle from '@/components/logoTitle'
+	import {nav} from '../router'
+	import {loginApi} from '@/request/api'
+	
 	export default {
 		name: 'Login',
 		data() {
 			return {
 				// 基础表单数据
 				loginFormData: {
-					account: '',
-					passWord: '',
+					userId: 'user001',
+					passWord: 'ab12345',
 				},
 				rules: {
-					account: {
+					userId: {
 						rules: [{
 							required: true,
 							errorMessage: '账号不能为空'
@@ -63,7 +69,18 @@
 		methods: {
 			login(ref) {
 				this.$refs['loginForm'].validate().then(res => {
-					console.log('success',res)
+					loginApi(this.loginFormData).then((res)=>{
+						console.log(res)
+						if(res.code=="200"){
+							localStorage.setItem('token',res.token);
+							this.$store.commit('LoginInfo',res);
+							uni.navigateTo({
+								url: '../pages/index/HomePage'
+							});
+						}else{
+							this.$refs.popup.open('top');
+						}
+					})
 				}).catch(err => false)
 			}
 		},

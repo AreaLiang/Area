@@ -63,6 +63,39 @@ app.get('/areaList', (req, res) => {
 	res.send(postData);
 })
 
+//登录
+app.post('/login',(req,res)=>{
+	let token = createToken('', 60);
+	
+	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
+		let postData = new resFun(req.body, "成功");
+		
+		let userInfo = Mock.mock({
+			"aa|5": [{
+				"number|1-100": 60,
+				"city|1": {
+					"310000": "上海市",
+					"320000": "江苏省",
+					"330000": "浙江省",
+					"340000": "安徽省",
+					"350000": "广东省",
+					"360000": "湖北省"
+				},
+				'phone|1': req.body.userId,
+				'data': '@datetime',
+				'id': '@increment'
+			}]
+		})
+		
+		postData.data = Object.assign(postData.data, userInfo);
+		postData.token = token;
+		
+		res.send(postData);
+	} else {
+		res.send(postData.fail("账号或者密码错误"));
+	}
+})
+
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })

@@ -1,30 +1,38 @@
-// 定义路由菜单,自定义needLogin判断该路由是否需要登录
-const routes=[
-	{
-		path: '/pages/home/home',
-		needLogin: false
-	},
-	{
-		path: '/pages/cart/cart',
-		needLogin: true		
-	}
-]
-// to是要去的页面，type是跳转方式 默认 navigateTo,与uniapp跳转方式一致
-const nav=(to,type='navigateTo')=>{
-	//在路由菜单中找到要去的页面
-	const route=routes.find(item=>item.path===to)
-	// 进行判断 如果可以直接跳转 不可以就跳转到其他页面
-	if(!route.needLogin){
-		uni[type]({
-			url: to
-		})
+// router.js
+import {
+	RouterMount,
+	createRouter
+} from 'uni-simple-router';
+import store from '../store';
+
+const router = createRouter({
+	platform: process.env.VUE_APP_PLATFORM,
+	routes: [...ROUTES]
+	
+});
+//全局路由前置守卫
+router.beforeEach((to, from, next) => {
+	console.log(to)
+
+	if(to.meta.needLogin){//判断是否需要权限
+		let userData=store.state.userData;
+		if(userData){
+			next();
+		}else{
+			router.replace('/src/pages/Login')
+		}
 	}else{
-		uni[type]({
-			url: '/pages/home/home'
-		})
+		next();
 	}
-}
-// 到处 nav方法
+	
+});
+
+// 全局路由后置守卫
+router.afterEach((to, from) => {
+	console.log('跳转结束')
+})
+
 export {
-	nav
+	router,
+	RouterMount
 }

@@ -1,19 +1,23 @@
+//vue.config.js
+const TransformPages = require('uni-read-pages')
+const {webpack} = new TransformPages()
 module.exports = {
-	// pages: {
-	// 	index: {
-	// 		entry: "src/main.js"
-	// 	}
-	// },
-	// 基本路径
-	// publicPath: './',
-	// // 输出文件目录
-	// outputDir: 'dist',
-	// assetsDir:'static',
-	// lintOnSave: false,
+	configureWebpack: {
+		plugins: [
+			new webpack.DefinePlugin({
+				ROUTES: webpack.DefinePlugin.runtimeValue(() => {
+					const tfPages = new TransformPages({
+						includes: ['path', 'name','meta', 'aliasPath']
+					});
+					return JSON.stringify(tfPages.routes)
+				}, true)
+			})
+		]
+	},
 	devServer: {
 		proxy: {
 			'/api': {
-				target: 'http://localhost:5000',//跨域端口
+				target: 'http://localhost:5000', //跨域端口
 				pathRewrite: {
 					'^/api': ''
 				}
