@@ -12,7 +12,6 @@
 		<svg class="icon" aria-hidden="true">
 			<use xlink:href="#icon-pingguo"></use>
 		</svg>
-		
 	</view>
 </template>
 

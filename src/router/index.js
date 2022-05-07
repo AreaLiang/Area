@@ -4,6 +4,7 @@ import {
 	createRouter
 } from 'uni-simple-router';
 import store from '../store';
+import { checkInfoApi } from '../../request/api'
 
 const router = createRouter({
 	platform: process.env.VUE_APP_PLATFORM,
@@ -22,23 +23,22 @@ router.beforeEach((to, from, next) => {
 			if(userData){
 				next();
 			}else{
-				
-				// let userinfo=store.state;
-				(async function(){
-					await store.dispatch('checkInfo',token).then(()=>{
-						console.log("6",JSON.parse(JSON.stringify(store.state.userData)))
-					})
-					
-				})()
-				
-				// setTimeout(()=>{
-				// 	console.log("6",JSON.parse(JSON.stringify(store.state.userData)))
-				// },1000)
-				// if(userinfo){
-					
-				// }else{
-				// 	router.replace('/src/pages/Login')
-				// }
+				checkInfoApi({
+					token:token
+				}).then((res)=>{
+					if(res.code=="200"){
+						store.commit('LoginInfo',res);
+					}else{
+						uni.showToast({
+							title: '登录超时',
+							duration: 1000
+						});
+						setTimeout(()=>{
+							localStorage.removeItem('token')
+							// router.replace('/src/pages/Login');
+						},1000)
+					}
+				})
 				next();
 			}
 		}else{

@@ -32,6 +32,7 @@
 		<uni-popup ref="popup" type="message">
 			<uni-popup-message type="error" message="登录失败" :duration="2000"></uni-popup-message>
 		</uni-popup>
+	
 	</view>
 </template>
 

@@ -18,6 +18,7 @@ module.exports = {
 		proxy: {
 			'/api': {
 				target: 'http://localhost:5000', //跨域端口
+				// target: 'http://192.168.0.24:5000', //跨域端口
 				pathRewrite: {
 					'^/api': ''
 				}

@@ -7,14 +7,15 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {    
-//     axios.defaults.baseURL = '/api';
+//     axios.defaults.baseURL = 'http://192.168.0.24:8080/api';
 // } else if (process.env.NODE_ENV == 'debug') {    
-//     axios.defaults.baseURL = '';
+//     axios.defaults.baseURL = 'http://192.168.0.24:3000/api';
 // } else if (process.env.NODE_ENV == 'production') {    
-//     axios.defaults.baseURL = 'http://api.123dailu.com/';
+//     axios.defaults.baseURL = 'http://192.168.0.24:3000/api';
 // }
 
-// axios.defaults.baseURL = 'http://192.168.0.103:9092';
+axios.defaults.baseURL = 'http://localhost:8080/api';
+// axios.defaults.baseURL = 'http://192.168.0.24:8080/api';
 
 // 请求拦截器
 axios.interceptors.request.use(

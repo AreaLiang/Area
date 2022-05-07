@@ -30,22 +30,22 @@ app.post('/test', (req, res) => {
 	if (req.body.userId == "user004" && req.body.userPassword == "ab12345") {
 		let postData = new resFun(req.body, "成功");
 		console.log(postData)
-		// let userInfo = Mock.mock({
-		// 	"aa|5": [{
-		// 		"number|1-100": 60,
-		// 		"city|1": {
-		// 			"310000": "上海市",
-		// 			"320000": "江苏省",
-		// 			"330000": "浙江省",
-		// 			"340000": "安徽省",
-		// 			"350000": "广东省",
-		// 			"360000": "湖北省"
-		// 		},
-		// 		'phone|1': /\d{9,10}\-/,
-		// 		'data': '@datetime',
-		// 		'id': '@increment'
-		// 	}]
-		// })
+		let userInfo = Mock.mock({
+			"aa|5": [{
+				"number|1-100": 60,
+				"city|1": {
+					"310000": "上海市",
+					"320000": "江苏省",
+					"330000": "浙江省",
+					"340000": "安徽省",
+					"350000": "广东省",
+					"360000": "湖北省"
+				},
+				'phone|1': /\d{9,10}\-/,
+				'data': '@datetime',
+				'id': '@increment'
+			}]
+		})
 
 		postData = Object.assign(postData.data, userInfo);
 		postData.token = token;
@@ -65,11 +65,9 @@ app.get('/areaList', (req, res) => {
 
 //登录
 app.post('/login',(req,res)=>{
-	let token = createToken('', 600);
-	
+	let token = createToken('', 6000);
+	let postData = new resFun(req.body, "成功");
 	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
-		
-		let postData = new resFun(req.body, "成功");
 		
 		let userInfo = Mock.mock({
 			"aa|5": [{
@@ -97,7 +95,7 @@ app.post('/login',(req,res)=>{
 	}
 })
 
-//登录
+//用户信息校验
 app.post('/checkInfo',(req,res)=>{
 	console.log(tokenExp({...req.headers}.authorization).time)
 	let token={...req.headers}.authorization;
