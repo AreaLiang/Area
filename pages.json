@@ -20,7 +20,8 @@
 		{
 			"path": "src/pages/index/HomePage",
 			"style": {
-				"navigationBarTitleText": "主页"
+				"navigationBarTitleText": "主页",
+				"navigationStyle":"custom"
 			},
 			"meta": {
 				"needLogin": true
@@ -29,7 +30,8 @@
 		{
 			"path": "src/pages/index/User",
 			"style": {
-				"navigationBarTitleText": "用户"
+				"navigationBarTitleText": "用户",
+				"navigationStyle":"custom"
 			},
 			"meta": {
 				"needLogin": true
