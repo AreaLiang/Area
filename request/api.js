@@ -11,4 +11,4 @@ export const areaListApi = p => get('/areaList', p);//国际电话 区号
 
 //主页面
 export const checkInfoApi = p => post('/checkInfo', p);//验证用户信息
-
+export const getArticleApi = p => post('/article', p);//获取主页文章信息

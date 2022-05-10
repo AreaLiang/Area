@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
 const areaArray=require('./areaList');
+const articleArray=require('./article');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -130,6 +131,22 @@ app.post('/checkInfo',(req,res)=>{
 		res.send(postData.fail("账号或者密码错误"));
 	}
 
+})
+
+//获取文章列表
+app.post('/article',(req,res)=>{
+	let data=articleArray.T1348647853363;
+	let page=req.body.page || 1;
+	let number =req.body.number || 5;
+	let length=data.length;
+	
+	let postData = new resFun();
+	let array=data.slice(number*(page-1),number*page);
+	postData.list=Math.ceil(length/number);
+	postData.data = Object.assign({}, array);
+	postData =Object.assign(postData,req.body);
+	
+	res.send(postData);
 })
 
 let server = app.listen(5000, () => {

@@ -1,8 +1,8 @@
 <template>
 	<view class="home-page">
 		<view class="box-bg">
-			<uni-search-bar class="uni-mt-10" radius="5" placeholder="自动显示隐藏" clearButton="auto" cancelButton="none"
-				@focus="focus" />
+			<uni-search-bar class="search-input" radius="5" :placeholder="searchPlaceholder" clearButton="auto"
+				cancelButton="none" @focus="focus" />
 		</view>
 		<uni-row class="scroll-box">
 			<uni-col :span="23">
@@ -30,41 +30,27 @@
 			</uni-col>
 		</uni-row>
 		<view class="content">
-			<view class="item">
-				<h3 class="title">疫情防不住，经济社会发展就无从谈起</h3>
-				<view class="article-info">
-					<span>光明网</span>
-					<span>6941 评论</span>
-					<span>5小时前</span>
+			<view class="item" v-for="(p,index) in article" :key="index">
+				<h3 class="title">{{p.title}}</h3>
+				<view class="article-img" v-if="p.ads?true:false">
+					<uni-row :gutter="10">
+						<uni-col v-for="imgItem in p.ads.slice(0,3)" :span="8">
+							<img :src="imgItem.imgsrc" alt="imgItem.title">
+						</uni-col>
+					</uni-row>
 				</view>
-			</view>
-			<view class="item">
-				<h3 class="title">坐月子无聊破译顶级密码？真相来了</h3>
-				<view class="article-info">
-					<span>北青网</span>
-					<span>6236 评论</span>
-					<span>11小时前</span>
-				</view>
-			</view>
-			<view class="item">
-				<h3 class="title">“无论我走到哪，永远是黄土地的儿子”</h3>
-				<view class="article-info">
-					<span>新华社</span>
-					<span>9237 评论</span>
-					<span>1周前</span>
-				</view>
-			</view>
-			<view class="item">
-				<h3 class="title">2012年上海富豪包养女大学生，7年生3娃花2000万，却没一个是他的</h3>
-				<view class="article-img">
-					<img src="/static/c1.png" alt="">
-					<img src="/static/c2.png" alt="">
-					<img src="/static/c3.png" alt="">
+				<view class="acticle-video" v-if="p.boardid=='video_bbs'">
+					<uni-row>
+						<uni-col :span="24">
+							<video controls :src="p.videoinfo.mp4_url" style="width: 100%;margin: 10px 0;"></video>
+						</uni-col>
+					</uni-row>
 				</view>
 				<view class="article-info">
-					<span>新华社</span>
-					<span>9237 评论</span>
-					<span>1周前</span>
+					<span v-show="p.top?true :false" class="top-span">置顶</span>
+					<span>{{p.source}}</span>
+					<span>{{p.replyCount}} 评论</span>
+					<span v-show="p.top?false :true">{{p.downTimes}}小时前</span>
 				</view>
 			</view>
 		</view>
@@ -75,36 +61,66 @@
 	import {
 		mapState
 	} from 'vuex'
+	import {
+		getArticleApi
+	} from '@/request/api.js'
 	export default {
 		name: 'HomePage',
 		data() {
 			return {
-
+				article: []
 			}
 		},
 		methods: {
 			//搜索框聚焦事件
 			focus() {
-
+				uni.navigateTo({
+					url:"/src/pages/index/SearchPage"
+				})
 			},
 			scroll: function(e) {
 				console.log(e)
-
 			},
 		},
 		computed: {
-			...mapState(["userData"])
+			...mapState(["userData"]),
+			searchPlaceholder() {
+				return {
+					...this.article[0]
+				}.title
+			}
 		},
 		components: {
 
 		},
 		onReady() {
 			let token = localStorage.getItem('token');
+			getArticleApi({
+				page: 1,
+				number: 10
+			}).then((res) => {
+				console.log(JSON.parse(JSON.stringify(res.data)));
+				let deepRes = Object.values(JSON.parse(JSON.stringify(res.data))); //把对象变成一个数组
+
+				let top = deepRes.filter((p) => { //筛选需要置顶的数组
+					return p.top
+				})
+
+				let common = deepRes.filter((p) => { //筛选没有置顶的数组
+					return !p.top
+				})
+				if (top.length > 0) { //重新排序，把需要置顶的数据放在头部
+					for (let i = 0; i < top.length; i++) {
+						common.unshift(top[i])
+					}
+				}
+				this.article = common;
+			});
 		}
 	}
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 	.box-bg {
 		background: #d04542;
 	}
@@ -118,35 +134,57 @@
 		display: inline-block;
 	}
 
+	.search-input {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
 	scroll-view ::-webkit-scrollbar {
 		display: none;
 		width: 0;
 		height: 0;
 		background-color: transparent;
 	}
-	.content{
-		.item{
-			border-bottom:1px solid #d9d9d9;
-			padding: 10px;
-			color: #343434;
+
+	.content {
+		padding-bottom: 80px;
+
+		.item {
+			border-bottom: 1px solid #d9d9d9;
+			padding: 12px 10px;
+			color: #424242;
+
+			&:nth-last-child(1) {
+				border-bottom: 0;
+			}
+
+			background-color: white;
 		}
-		.title{
+
+		.title {
 			width: 100%;
 			overflow: hidden;
-			white-space:nowrap;
-			text-overflow:ellipsis;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 		}
-		.article-img img{
-			width: 80px;
-			height: 80px;
+
+		.article-img img {
+			width: 100%;
+			height: 5em;
 			margin: 3px;
 		}
-		.article-info{
+
+		.article-info {
 			margin-top: 3px;
+
+			.top-span {
+				color: #ff5454;
+			}
 		}
-		.article-info span{
-			margin-right: 5px;
-			color:#919191;
+
+		.article-info span {
+			margin-right: 10px;
+			color: #919191;
 		}
 	}
 </style>

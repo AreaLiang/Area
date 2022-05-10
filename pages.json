@@ -20,7 +20,7 @@
 		{
 			"path": "src/pages/index/HomePage",
 			"style": {
-				"navigationBarTitleText": "主页",
+				"navigationBarTitleText": "首页",
 				"navigationStyle":"custom"
 			},
 			"meta": {
@@ -29,6 +29,16 @@
 		},
 		{
 			"path": "src/pages/index/User",
+			"style": {
+				"navigationBarTitleText": "用户",
+				"navigationStyle":"custom"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/SearchPage",
 			"style": {
 				"navigationBarTitleText": "用户",
 				"navigationStyle":"custom"
@@ -50,8 +60,8 @@
 	"tabBar":{//底部导航
 		"color": "#515151",
 		"selectedColor":"#d81e06",
-		"backgroundColor": "white",
-		"borderStyle": "black",
+		"backgroundColor": "#f5f5f5",
+		"borderStyle": "white",
 		"list": [
 			{
 				"pagePath": "src/pages/index/HomePage",
