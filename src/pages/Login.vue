@@ -93,6 +93,7 @@
 
 <style scoped lang="less">
 	@import "@/static/iconfont.css";
+
 	.login {
 		margin: 25px;
 		height: 95%;

@@ -54,29 +54,36 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="searchPopup" background-color="white" style="z-index: 999;">
+			<view class="popup-content" :class="{ 'popup-height': type === 'left' || type === 'right' }" >
+				<SearchPage :popupSwitch="popupClose"/>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-	import {
-		mapState
-	} from 'vuex'
-	import {
-		getArticleApi
-	} from '@/request/api.js'
+	import {mapState} from 'vuex'
+	import {getArticleApi} from '@/request/api.js'
+	import SearchPage from './SearchPage'
 	export default {
 		name: 'HomePage',
 		data() {
 			return {
-				article: []
+				article: [],
+				type: 'right',
 			}
 		},
 		methods: {
 			//搜索框聚焦事件
 			focus() {
-				uni.navigateTo({
-					url:"/src/pages/index/SearchPage"
-				})
+				// uni.navigateTo({
+				// 	url:"/src/pages/index/SearchPage"
+				// })
+				this.$refs.searchPopup.open(this.type)
+			},
+			popupClose(){
+				this.$refs.searchPopup.close()
 			},
 			scroll: function(e) {
 				console.log(e)
@@ -91,7 +98,7 @@
 			}
 		},
 		components: {
-
+			SearchPage
 		},
 		onReady() {
 			let token = localStorage.getItem('token');
@@ -99,7 +106,7 @@
 				page: 1,
 				number: 10
 			}).then((res) => {
-				console.log(JSON.parse(JSON.stringify(res.data)));
+				// console.log(JSON.parse(JSON.stringify(res.data)));
 				let deepRes = Object.values(JSON.parse(JSON.stringify(res.data))); //把对象变成一个数组
 
 				let top = deepRes.filter((p) => { //筛选需要置顶的数组
@@ -121,6 +128,7 @@
 </script>
 
 <style scoped lang="less">
+
 	.box-bg {
 		background: #d04542;
 	}
@@ -186,5 +194,10 @@
 			margin-right: 10px;
 			color: #919191;
 		}
+		
 	}
+	.popup-content {
+		width: 100vw;
+	}
+	
 </style>

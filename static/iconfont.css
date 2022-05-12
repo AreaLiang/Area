@@ -11,6 +11,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-remen:before {
+  content: "\e6ac";
+}
+
+.icon-vertical_line:before {
+  content: "\e63a";
+}
+
 .icon-feedback:before {
   content: "\e635";
 }

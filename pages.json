@@ -40,7 +40,17 @@
 		{
 			"path": "src/pages/index/SearchPage",
 			"style": {
-				"navigationBarTitleText": "用户",
+				"navigationBarTitleText": "搜素",
+				"navigationStyle":"custom"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/HotList",
+			"style": {
+				"navigationBarTitleText": "热榜",
 				"navigationStyle":"custom"
 			},
 			"meta": {
@@ -76,7 +86,7 @@
 				"selectedIconPath": "static/bottomNavIcon/video-active.svg"
 			},
 			{
-				"pagePath": "src/pages/Register2",
+				"pagePath": "src/pages/index/HotList",
 				"text": "热榜",
 				"iconPath": "static/bottomNavIcon/Hot.svg",
 				"selectedIconPath": "static/bottomNavIcon/Hot-active.svg"
