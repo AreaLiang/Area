@@ -1,6 +1,6 @@
 <template>
 	<view class="search-box">
-		<uni-search-bar radius="5" placeholder="一直显示" clearButton="always" cancelButton="always" @confirm="search"
+		<uni-search-bar radius="5" placeholder="汶川地震那天你干什么" clearButton="always" cancelButton="always" @confirm="search"
 			@cancel="popupSwitch" />
 
 		<view class="row-box h_top">

@@ -1,8 +1,7 @@
 <template>
 	<view class="home-page">
 		<view class="box-bg">
-			<uni-search-bar class="search-input" radius="5" :placeholder="searchPlaceholder" clearButton="auto"
-				cancelButton="none" @focus="focus" />
+			<searchbox :searchPlaceholder="searchPlaceholder"/><!-- 搜索框 -->
 		</view>
 		<uni-row class="scroll-box">
 			<uni-col :span="23">
@@ -54,37 +53,22 @@
 				</view>
 			</view>
 		</view>
-		<uni-popup ref="searchPopup" background-color="white" style="z-index: 999;">
-			<view class="popup-content" :class="{ 'popup-height': type === 'left' || type === 'right' }" >
-				<SearchPage :popupSwitch="popupClose"/>
-			</view>
-		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import {mapState} from 'vuex'
 	import {getArticleApi} from '@/request/api.js'
-	import SearchPage from './SearchPage'
+	import searchbox from '@/components/searchBox'
+	
 	export default {
 		name: 'HomePage',
 		data() {
 			return {
 				article: [],
-				type: 'right',
 			}
 		},
 		methods: {
-			//搜索框聚焦事件
-			focus() {
-				// uni.navigateTo({
-				// 	url:"/src/pages/index/SearchPage"
-				// })
-				this.$refs.searchPopup.open(this.type)
-			},
-			popupClose(){
-				this.$refs.searchPopup.close()
-			},
 			scroll: function(e) {
 				console.log(e)
 			},
@@ -98,7 +82,7 @@
 			}
 		},
 		components: {
-			SearchPage
+			searchbox
 		},
 		onReady() {
 			let token = localStorage.getItem('token');
@@ -140,11 +124,6 @@
 	.top-title span {
 		margin: 5px 10px;
 		display: inline-block;
-	}
-
-	.search-input {
-		white-space: nowrap;
-		text-overflow: ellipsis;
 	}
 
 	scroll-view ::-webkit-scrollbar {
@@ -196,8 +175,6 @@
 		}
 		
 	}
-	.popup-content {
-		width: 100vw;
-	}
+	
 	
 </style>
