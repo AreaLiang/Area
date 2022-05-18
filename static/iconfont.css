@@ -11,6 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-bofang:before {
+  content: "\e8a3";
+}
+
 .icon-remen:before {
   content: "\e6ac";
 }

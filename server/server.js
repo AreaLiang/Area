@@ -149,6 +149,28 @@ app.post('/article',(req,res)=>{
 	res.send(postData);
 })
 
+//获取视频列表
+app.post('/vedio',(req,res)=>{
+	let data=articleArray.T1348647853363;
+	let page=req.body.page || 1;
+	let number =req.body.number || 5;
+	let length=data.length;
+	
+	let postData = new resFun();
+	
+	data=data.filter((p)=>{
+		return p.boardid=="video_bbs"
+	});
+	
+	let array=data.slice(number*(page-1),number*page);
+	
+	postData.list=Math.ceil(length/number);
+	postData.data = Object.assign({}, array);
+	postData =Object.assign(postData,req.body);
+	
+	res.send(postData);
+})
+
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })

@@ -1,12 +1,11 @@
 <template>
 	<view class="home-page">
 		<view class="box-bg">
-			<searchbox :searchPlaceholder="searchPlaceholder"/><!-- 搜索框 -->
+			<searchbox :searchPlaceholder="searchPlaceholder" /><!-- 搜索框 -->
 		</view>
 		<uni-row class="scroll-box">
 			<uni-col :span="23">
-				<scroll-view class="scroll-view_H" scroll-x="true" style="white-space: nowrap;" @scroll="scroll"
-					scroll-left="120">
+				<scroll-view class="scroll-view_H" scroll-x="true" style="white-space: nowrap;" scroll-left="120">
 					<view class="top-title-box">
 						<view class="top-title">
 							<span>关注</span>
@@ -29,28 +28,37 @@
 			</uni-col>
 		</uni-row>
 		<view class="content">
-			<view class="item" v-for="(p,index) in article" :key="index">
-				<h3 class="title">{{p.title}}</h3>
-				<view class="article-img" v-if="p.ads?true:false">
-					<uni-row :gutter="10">
-						<uni-col v-for="imgItem in p.ads.slice(0,3)" :span="8">
-							<img :src="imgItem.imgsrc" alt="imgItem.title">
-						</uni-col>
-					</uni-row>
-				</view>
-				<view class="acticle-video" v-if="p.boardid=='video_bbs'">
-					<uni-row>
-						<uni-col :span="24">
-							<video controls :src="p.videoinfo.mp4_url" style="width: 100%;margin: 10px 0;"></video>
-						</uni-col>
-					</uni-row>
-				</view>
-				<view class="article-info">
-					<span v-show="p.top?true :false" class="top-span">置顶</span>
-					<span>{{p.source}}</span>
-					<span>{{p.replyCount}} 评论</span>
-					<span v-show="p.top?false :true">{{p.downTimes}}小时前</span>
-				</view>
+			<view class="wrap">
+				<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+					@scrolltolower="lower"  style="height: 100%;">
+					<view class="item" v-for="(p,index) in article" :key="index">
+						<h3 class="title">{{p.title}}</h3>
+						<view class="article-img" v-if="p.ads?true:false">
+							<uni-row :gutter="10">
+								<uni-col v-for="imgItem in p.ads.slice(0,3)" :span="8">
+									<img :src="imgItem.imgsrc" alt="imgItem.title">
+								</uni-col>
+							</uni-row>
+						</view>
+						<view class="acticle-video" v-if="p.boardid=='video_bbs'">
+							<uni-row>
+								<uni-col :span="24">
+									<video controls :src="p.videoinfo.mp4_url"
+										style="width: 100%;margin: 10px 0;"></video>
+								</uni-col>
+							</uni-row>
+						</view>
+						<view class="article-info">
+							<span v-show="p.top?true :false" class="top-span">置顶</span>
+							<span>{{p.source}}</span>
+							<span>{{p.replyCount}} 评论</span>
+							<span v-show="p.top?false :true">{{p.downTimes}}小时前</span>
+						</view>
+					</view>
+					
+					<uni-load-more iconType="circle" :status="status" />
+					
+				</scroll-view>
 			</view>
 		</view>
 	</view>
@@ -60,18 +68,41 @@
 	import {mapState} from 'vuex'
 	import {getArticleApi} from '@/request/api.js'
 	import searchbox from '@/components/searchBox'
-	
+
 	export default {
 		name: 'HomePage',
 		data() {
 			return {
 				article: [],
+				status: 'more',
+				page:1,
+				showNumber:10 //一页显示多少条数据
 			}
 		},
 		methods: {
-			scroll: function(e) {
+			upper: function(e) {
 				console.log(e)
 			},
+			lower: function(e) {
+				if(this.status=="more"){
+					this.page += 1;
+					this.status="loading";
+					getArticleApi({
+						page: this.page,
+						number: this.showNumber
+					}).then((res) => {
+						let data = Object.values( JSON.parse(JSON.stringify(res)).data );
+						
+						if(data.length>0){
+							this.article.push(...data)
+							this.status="more"
+						}else{
+							this.status="no-more"
+						}
+						
+					})
+				}
+			}
 		},
 		computed: {
 			...mapState(["userData"]),
@@ -87,8 +118,8 @@
 		onReady() {
 			let token = localStorage.getItem('token');
 			getArticleApi({
-				page: 1,
-				number: 10
+				page: this.page,
+				number: this.showNumber
 			}).then((res) => {
 				// console.log(JSON.parse(JSON.stringify(res.data)));
 				let deepRes = Object.values(JSON.parse(JSON.stringify(res.data))); //把对象变成一个数组
@@ -112,6 +143,11 @@
 </script>
 
 <style scoped lang="less">
+	.home-page {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
 
 	.box-bg {
 		background: #d04542;
@@ -134,7 +170,11 @@
 	}
 
 	.content {
-		padding-bottom: 80px;
+		flex: 1;
+		overflow: hidden;
+		.wrap {
+			height: 100%;
+		}
 
 		.item {
 			border-bottom: 1px solid #d9d9d9;
@@ -173,8 +213,6 @@
 			margin-right: 10px;
 			color: #919191;
 		}
-		
+
 	}
-	
-	
 </style>

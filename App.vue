@@ -31,4 +31,11 @@
 		padding: 10px;
 	}
 	
+	scroll-view ::-webkit-scrollbar {
+		display: none;
+		width: 0;
+		height: 0;
+		background-color: transparent;
+	}
+	
 </style>

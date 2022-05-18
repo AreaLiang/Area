@@ -37,28 +37,31 @@
 				</view>
 			</uni-col>
 		</uni-row>
-		
-		<uni-card title="常用功能" margin="10px 0 10px 0" :border="false">
-			<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
-				<uni-grid-item v-for="(item, index) in commonFunctions" :index="index" :key="index">
-					<view class="grid-item-box" style="background-color: #fff;">
-						<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
-						<text class="text">{{item.name}}</text>
-					</view>
-				</uni-grid-item>
-			</uni-grid>
-		</uni-card>
-
-		<uni-card title="更多功能" margin="10px 0 10px 0" :border="false">
-			<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
-				<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
-					<view class="grid-item-box" style="background-color: #fff;">
-						<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
-						<text class="text">{{item.name}}</text>
-					</view>
-				</uni-grid-item>
-			</uni-grid>
-		</uni-card>
+		<view class="item-box">
+			<scroll-view  scroll-y="true" class="scroll-Y" style="height: 100%;">
+				<uni-card title="常用功能" margin="10px 0 10px 0" :border="false">
+					<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
+						<uni-grid-item v-for="(item, index) in commonFunctions" :index="index" :key="index">
+							<view class="grid-item-box" style="background-color: #fff;">
+								<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+								<text class="text">{{item.name}}</text>
+							</view>
+						</uni-grid-item>
+					</uni-grid>
+				</uni-card>
+			
+				<uni-card title="更多功能" margin="10px 0 10px 0" :border="false">
+					<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
+						<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
+							<view class="grid-item-box" style="background-color: #fff;">
+								<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+								<text class="text">{{item.name}}</text>
+							</view>
+						</uni-grid-item>
+					</uni-grid>
+				</uni-card>
+			</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -159,7 +162,15 @@
 
 	.userPage {
 		overflow: auto;
-		height: 750px;
+		background: whitesmoke;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+	
+	.item-box{
+		flex: 1;
+		overflow: hidden;
 	}
 
 	.logged-box {
@@ -167,7 +178,7 @@
 		display: flex;
 		align-items: center;
 		color: #2c2c2c;
-		
+
 		.portrait-box {
 			width: 80px;
 			height: 80px;
@@ -187,8 +198,8 @@
 			display: flex;
 			justify-content: space-between;
 		}
-		
-		.apply-certification{
+
+		.apply-certification {
 			background: #fdeaea;
 			border-radius: 10px 0 0 10px;
 			width: 75px;
@@ -281,15 +292,17 @@
 
 	/* #ifdef H5 */
 	@media screen and (min-width: 450px) {
-		.logged-box{
+		.logged-box {
 			.user-name {
 				font-size: 20px;
 			}
-			.notice-box{
+
+			.notice-box {
 				font-size: 18px;
 			}
 		}
 	}
+
 	@media screen and (min-width: 768px) and (max-width: 1425px) {
 		.swiper {
 			height: 630px;
