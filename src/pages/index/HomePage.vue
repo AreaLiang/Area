@@ -84,6 +84,7 @@
 				console.log(e)
 			},
 			lower: function(e) {
+			console.log(this.article)
 				if(this.status=="more"){
 					this.page += 1;
 					this.status="loading";

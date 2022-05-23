@@ -40,18 +40,20 @@
 		<view class="item-box">
 			<scroll-view  scroll-y="true" class="scroll-Y" style="height: 100%;">
 				<uni-card title="常用功能" margin="10px 0 10px 0" :border="false">
-					<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
+					<uni-grid :column="4" :highlight="true" :showBorder="false">
 						<uni-grid-item v-for="(item, index) in commonFunctions" :index="index" :key="index">
-							<view class="grid-item-box" style="background-color: #fff;">
-								<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
-								<text class="text">{{item.name}}</text>
-							</view>
+							<navigator :url="item.url">
+								<view class="grid-item-box" style="background-color: #fff;">
+									<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+									<text class="text">{{item.name}}</text>
+								</view>
+							</navigator>
 						</uni-grid-item>
 					</uni-grid>
 				</uni-card>
 			
 				<uni-card title="更多功能" margin="10px 0 10px 0" :border="false">
-					<uni-grid :column="4" :highlight="true" @change="change" :showBorder="false">
+					<uni-grid :column="4" :highlight="true" :showBorder="false">
 						<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
 							<view class="grid-item-box" style="background-color: #fff;">
 								<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
@@ -88,7 +90,7 @@
 					{
 						name: "浏览历史",
 						icon: "icon-liulanlishi",
-						url: "",
+						url: "src/pages/index/User/NoticePage?index=3",
 					},
 					{
 						name: "钱包",
@@ -108,7 +110,7 @@
 					{
 						name: "系统设置",
 						icon: "icon-xitong",
-						url: "",
+						url: "src/pages/index/User/SystemSettings"
 					}
 				],
 				moreFunctions: [{
@@ -159,10 +161,11 @@
 
 <style scoped lang="less">
 	@import "@/static/iconfont.css";
-
+	@import '@/src/styles/index.less';
+	
 	.userPage {
 		overflow: auto;
-		background: whitesmoke;
+		background: #ebebeb;
 		display: flex;
 		flex-direction: column;
 		height: 100%;

@@ -13,8 +13,6 @@ const router = createRouter({
 });
 //全局路由前置守卫
 router.beforeEach((to, from, next) => {
-	console.log(to)
-
 	if(to.meta.needLogin){//判断是否需要权限
 		
 		let token =localStorage.getItem('token')
@@ -22,20 +20,20 @@ router.beforeEach((to, from, next) => {
 			let userData=store.state.userData;
 			if(userData){
 				next();
-			}else{
+			}else{//页面刷新，用户数据不存在，重新请求
 				checkInfoApi({
 					token:token
 				}).then((res)=>{
 					if(res.code=="200"){
 						store.commit('LoginInfo',res);
-					}else{
+					}else{//如果返回数据不成功，则登录超时
 						uni.showToast({
 							title: '登录超时',
 							duration: 1000
 						});
 						setTimeout(()=>{
 							localStorage.removeItem('token')
-							// router.replace('/src/pages/Login');
+							router.replace('/src/pages/Login');
 						},1000)
 					}
 				})

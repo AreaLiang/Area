@@ -50,7 +50,7 @@
 				NewsList: [],
 				status: 'more',
 				page:1,
-				showNumber:10 //一页显示多少条数据
+				showNumber:15 //一页显示多少条数据
 			}
 		},
 		methods: {
@@ -64,10 +64,13 @@
 					page: this.page,
 					number: this.showNumber
 				}).then((res) => {
+					
 					let data = Object.values( JSON.parse(JSON.stringify(res)).data );
+					let array=Object.values(JSON.parse(JSON.stringify(this.NewsList)));
 				
 					if(data.length>0){
-						this.NewsList.push(...data)
+						array.push(...data);
+						this.NewsList=array;
 						this.status="more"
 					}else{
 						this.status="no-more"

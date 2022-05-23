@@ -66,7 +66,7 @@ app.get('/areaList', (req, res) => {
 
 //登录
 app.post('/login',(req,res)=>{
-	let token = createToken('', 6000);
+	let token = createToken('', 1200);
 	let postData = new resFun(req.body, "成功");
 	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
 		

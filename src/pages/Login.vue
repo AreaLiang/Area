@@ -69,14 +69,27 @@
 		},
 		methods: {
 			login(ref) {
-				this.$refs['loginForm'].validate().then(res => {
-					loginApi(this.loginFormData).then((res)=>{
-						if(res.code=="200"){
+				this.$refs['loginForm'].validate().then(res => {//登录验证通过
+					loginApi(this.loginFormData).then((res)=>{//校验登录数据
+						if(res.code=="200"){//登录成功
 							localStorage.setItem('token',res.token);
 							this.$store.commit('LoginInfo',res);
 							uni.navigateTo({
 								url: '../pages/index/HomePage'
 							});
+							
+							setTimeout(()=>{//登录超时
+								uni.showToast({
+									title: '登录超时',
+									duration: 1000
+								});
+								setTimeout(()=>{
+									localStorage.removeItem('token')
+									uni.redirectTo({
+										url: '/src/pages/Login'
+									});
+								},1000)
+							},1200000)
 						}else{
 							this.$refs.popup.open('top');
 						}

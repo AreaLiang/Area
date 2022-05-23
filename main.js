@@ -7,6 +7,7 @@ import App from './App'
 import {router,RouterMount} from './src/router'  //路径换成自己的
 Vue.use(router)
 
+
 //引入store
 import store from './src/store'
 
@@ -17,6 +18,9 @@ App.mpType = 'app'
 const app = new Vue({
     ...App,
 	store,
+	beforeCreate(){
+		Vue.prototype.$bus=this
+	}
 })
 
 //v1.3.5起 H5端 你应该去除原有的app.$mount();使用路由自带的渲染方式
