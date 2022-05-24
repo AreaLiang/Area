@@ -9,8 +9,8 @@
 			<view>{{comment}}</view>
 		</view>
 		<view class="item">
-			<view><uni-icons custom-prefix="iconfont" type="icon-dianzan" size="4vw" color="black" /></view>
-			<view>{{like}}</view>
+			<view><uni-icons custom-prefix="iconfont" type="icon-dianzan" size="4vw" :color=" red ? '#d90707' : 'black' " /></view>
+			<view :class="{red:red}">{{like}}</view>
 		</view>
 	</view>
 </template>
@@ -32,6 +32,9 @@
 			},
 			like:{
 				default:"点赞"
+			},
+			red:{
+				default:false
 			}
 		}
 	}
@@ -58,5 +61,8 @@
 				}
 			}
 		}
+	}
+	.red{
+		color: #d90707;
 	}
 </style>

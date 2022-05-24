@@ -81,7 +81,7 @@
 		{
 			"path": "src/pages/index/User/HistoryRecord",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "历史",
 				"navigationBarBackgroundColor": "white"
 			},
 			"meta": {
@@ -91,7 +91,7 @@
 		{
 			"path": "src/pages/index/User/NoticePage",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "",//常用功能显示的动态页面
 				"navigationBarBackgroundColor": "white"
 			},
 			"meta": {
@@ -101,7 +101,47 @@
 		{
 			"path": "src/pages/index/User/Comment",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "评论",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/CollectPage",
+			"style": {
+				"navigationBarTitleText": "收藏",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/LikePage",
+			"style": {
+				"navigationBarTitleText": "点赞",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/PushPage",
+			"style": {
+				"navigationBarTitleText": "推送",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/ReportPage",
+			"style": {
+				"navigationBarTitleText": "举报",
 				"navigationBarBackgroundColor": "white"
 			},
 			"meta": {

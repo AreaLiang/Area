@@ -85,12 +85,12 @@
 					{
 						name: "收藏",
 						icon: "icon-shoucang",
-						url: "",
+						url: "src/pages/index/User/NoticePage?index=0&&name=CollectPage",
 					},
 					{
 						name: "浏览历史",
 						icon: "icon-liulanlishi",
-						url: "src/pages/index/User/NoticePage?index=3",
+						url: "src/pages/index/User/NoticePage?index=3&&name=HistoryRecord",
 					},
 					{
 						name: "钱包",

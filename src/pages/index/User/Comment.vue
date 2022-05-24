@@ -26,7 +26,7 @@
 					</view>
 					<view class="vedio-img">
 						<img src="@/static/comment/cover01.jpg" class="cover">
-						<img src="@/static/start.png" class="start-img">
+						<img src="/static/start.png" class="start-img">
 						<span class="vedio-time">0:25</span>
 					</view>
 				</view>
@@ -62,7 +62,7 @@
 					</view>
 					<view class="vedio-img">
 						<img src="@/static/comment/cover02.jpg" class="cover">
-						<img src="@/static/start.png" class="start-img">
+						<img src="/static/start.png" class="start-img">
 						<span class="vedio-time">1:01</span>
 					</view>
 				</view>
@@ -98,7 +98,7 @@
 					</view>
 					<view class="vedio-img">
 						<img src="@/static/comment/cover03.jpg" class="cover">
-						<img src="@/static/start.png" class="start-img">
+						<img src="/static/start.png" class="start-img">
 						<span class="vedio-time">0:55</span>
 					</view>
 				</view>

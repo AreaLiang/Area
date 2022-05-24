@@ -16,7 +16,7 @@
 			return{
 				titleList:[{
 					name:'收藏',
-					componentName:''
+					componentName:'CollectPage'
 				},
 				{
 					name:'评论',
@@ -24,7 +24,7 @@
 				},
 				{
 					name:'点赞',
-					componentName:''
+					componentName:'LikePage'
 				},
 				{
 					name:'历史',
@@ -32,11 +32,11 @@
 				},
 				{
 					name:'推送',
-					componentName:''
+					componentName:'PushPage'
 				},
 				{
 					name:'举报',
-					componentName:''
+					componentName:'ReportPage'
 				}],
 				actIndex:1
 			}

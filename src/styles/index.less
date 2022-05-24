@@ -1,3 +1,52 @@
 @backgroundColor:whitesmoke;
 @standardBorderStyle:1px solid #e9e9e9;
 @standardColor: #999;
+
+.pu-acticle(){
+	height: 94%;
+	background-color: @backgroundColor;
+	overflow: hidden;
+	padding-bottom: 20px;
+	
+	.acticle-tyle {
+		.text {
+			font-weight: bold;
+			color: #222222;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 4;
+		}
+	
+		.cover {
+			img {
+				width: 100%;
+			}
+		}
+	}
+	
+	.vedio-tyle {
+		overflow: hidden;
+	
+		.vedio-cover {
+			margin-top: 5px;
+			position: relative;
+			.cover {
+				width: 100%;
+			}
+		}
+		.start-img{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			left: 50%;
+			top:50%;
+			transform: translate(-50%,-50%);
+		}
+	}
+	
+	.pd {
+		padding: 0 10px;
+	}
+}

@@ -2,18 +2,17 @@
 	<view class="view-article-section">
 		<view class="header">
 			<uni-list-chat
-			title="赖少个趁仔1"
+			:title=userName
 			:avatar-circle="true" 
-			avatar="/static/user/touxian01.jpg" 
-			note="2020 年 3 月 19 日" 
-			thumbSize="lg">
+			:avatar=avatar
+			:note="note">
 			</uni-list-chat>
 		</view>
 		<view class="body">
 			<slot></slot>
 		</view>
 		<view class="footer">
-			<mutual :repost="Repost" :comment="Comment" :like="Like"/>
+			<mutual :repost="Repost" :comment="Comment" :like="Like" :red='red'/>
 		</view>
 	</view>
 </template>
@@ -33,7 +32,7 @@
 		components:{
 			mutual
 		},
-		props:['Like','Comment','Repost']
+		props:['Like','Comment','Repost','avatar','note','userName','red']
 	}
 </script>
 
