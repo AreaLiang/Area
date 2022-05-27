@@ -89,7 +89,7 @@
 			}
 		},
 		{
-			"path": "src/pages/index/User/NoticePage",
+			"path": "src/pages/index/User/GatherPage",
 			"style": {
 				"navigationBarTitleText": "",//常用功能显示的动态页面
 				"navigationBarBackgroundColor": "white"
@@ -147,7 +147,49 @@
 			"meta": {
 				"needLogin": true
 			}
+		},
+		{
+			"path": "src/pages/index/User/Notification",
+			"style": {
+				"navigationBarTitleText": "通知",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/Follow",
+			"style": {
+				"navigationBarTitleText": "关注",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/Wallet",
+			"style": {
+				"navigationBarTitleText": "我的钱包",
+				"navigationBarBackgroundColor": "#3a3f4b",
+				"navigationBarTextStyle":"white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/FreeStreamingService",
+			"style": {
+				"navigationBarTitleText": "免流服务",
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

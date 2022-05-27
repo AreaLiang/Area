@@ -55,10 +55,12 @@
 				<uni-card title="更多功能" margin="10px 0 10px 0" :border="false">
 					<uni-grid :column="4" :highlight="true" :showBorder="false">
 						<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
-							<view class="grid-item-box" style="background-color: #fff;">
-								<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
-								<text class="text">{{item.name}}</text>
-							</view>
+							<navigator :url="item.url">
+								<view class="grid-item-box" style="background-color: #fff;">
+									<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+									<text class="text">{{item.name}}</text>
+								</view>
+							</navigator>
 						</uni-grid-item>
 					</uni-grid>
 				</uni-card>
@@ -75,27 +77,27 @@
 				commonFunctions: [{
 						name: "关注",
 						icon: "icon-guanzhu",
-						url: "",
+						url: "src/pages/index/User/Follow",
 					},
 					{
 						name: "消息通知",
 						icon: "icon-xiaoxitongzhi",
-						url: "",
+						url: "src/pages/index/User/Notification",
 					},
 					{
 						name: "收藏",
 						icon: "icon-shoucang",
-						url: "src/pages/index/User/NoticePage?index=0&&name=CollectPage",
+						url: "src/pages/index/User/GatherPage?index=0&&name=CollectPage",
 					},
 					{
 						name: "浏览历史",
 						icon: "icon-liulanlishi",
-						url: "src/pages/index/User/NoticePage?index=3&&name=HistoryRecord",
+						url: "src/pages/index/User/GatherPage?index=3&&name=HistoryRecord",
 					},
 					{
 						name: "钱包",
 						icon: "icon-qianbao",
-						url: "",
+						url: "src/pages/index/User/Wallet",
 					},
 					{
 						name: "用户反馈",
@@ -105,7 +107,7 @@
 					{
 						name: "免流量服务",
 						icon: "icon-wode-faxian-mianliuliang",
-						url: "",
+						url: "src/pages/index/User/FreeStreamingService",
 					},
 					{
 						name: "系统设置",
@@ -126,12 +128,12 @@
 					{
 						name: "评论",
 						icon: "icon-pinglun",
-						url: "",
+						url: "src/pages/index/User/GatherPage?index=1&&name=Comment",
 					},
 					{
 						name: "点赞",
 						icon: "icon-dianzan",
-						url: "",
+						url: "src/pages/index/User/GatherPage?index=2&&name=LikePage",
 					},
 					{
 						name: "扫一扫",
@@ -143,6 +145,7 @@
 						icon: "icon-gouwuche",
 						url: "",
 					}
+					
 				]
 			}
 		},

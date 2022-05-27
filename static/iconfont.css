@@ -11,6 +11,54 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-chengshifuwu:before {
+  content: "\e600";
+}
+
+.icon-shoujichongzhi:before {
+  content: "\e601";
+}
+
+.icon-_baoxianlipei:before {
+  content: "\e61b";
+}
+
+.icon-cai:before {
+  content: "\e602";
+}
+
+.icon-jiedai:before {
+  content: "\e62a";
+}
+
+.icon-gupiao-select:before {
+  content: "\e603";
+}
+
+.icon-xiaoshuo:before {
+  content: "\ef59";
+}
+
+.icon-xinyongkayinhangka:before {
+  content: "\e998";
+}
+
+.icon-shangcheng-2:before {
+  content: "\e678";
+}
+
+.icon-taojinbi:before {
+  content: "\e756";
+}
+
+.icon-hongbao:before {
+  content: "\e89a";
+}
+
+.icon-kabao:before {
+  content: "\e682";
+}
+
 .icon-pinglun1:before {
   content: "\e7bf";
 }
