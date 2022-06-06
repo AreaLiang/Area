@@ -5,17 +5,17 @@
 		</view>
 		<uni-row class="scroll-box">
 			<uni-col :span="23">
-				<scroll-view class="scroll-view_H" scroll-x="true" style="white-space: nowrap;" scroll-left="120">
+				<scroll-view class="scroll-view_H" scroll-x="true" style="white-space: nowrap;" scroll-left="0">
 					<view class="top-title-box">
 						<view class="top-title">
-							<span>关注</span>
-							<span>推荐</span>
-							<span>肇庆</span>
-							<span>视频</span>
-							<span>小说</span>
-							<span>小视频</span>
-							<span>抗疫</span>
-							<span>问答</span>
+							<span @click="currentType(1)" :class="{active:articelType==1}">关注</span>
+							<span @click="currentType(2)" :class="{active:articelType==2}">推荐</span>
+							<span @click="currentType(3)" :class="{active:articelType==3}">肇庆</span>
+							<span @click="currentType(4)" :class="{active:articelType==4}">视频</span>
+							<span @click="currentType(5)" :class="{active:articelType==5}">小说</span>
+							<span @click="currentType(6)" :class="{active:articelType==6}">小视频</span>
+							<span @click="currentType(7)" :class="{active:articelType==7}">抗疫</span>
+							<span @click="currentType(8)" :class="{active:articelType==8}">问答</span>
 						</view>
 					</view>
 				</scroll-view>
@@ -76,7 +76,8 @@
 				article: [],
 				status: 'more',
 				page:1,
-				showNumber:10 //一页显示多少条数据
+				showNumber:10 ,//一页显示多少条数据
+				articelType:2
 			}
 		},
 		methods: {
@@ -103,7 +104,36 @@
 						
 					})
 				}
+			},
+			currentType(i){
+				this.articelType=i;
+				this.page=i-1;
+				this.getData();
+			},
+			getData(){
+				getArticleApi({
+					page: this.page,
+					number: this.showNumber
+				}).then((res) => {
+					console.log(JSON.parse(JSON.stringify(res.data)));
+					let deepRes = Object.values(JSON.parse(JSON.stringify(res.data))); //把对象变成一个数组
+				
+					let top = deepRes.filter((p) => { //筛选需要置顶的数组
+						return p.top
+					})
+				
+					let common = deepRes.filter((p) => { //筛选没有置顶的数组
+						return !p.top
+					})
+					if (top.length > 0) { //重新排序，把需要置顶的数据放在头部
+						for (let i = 0; i < top.length; i++) {
+							common.unshift(top[i])
+						}
+					}
+					this.article = common;
+				});
 			}
+			
 		},
 		computed: {
 			...mapState(["userData"]),
@@ -118,27 +148,7 @@
 		},
 		onReady() {
 			let token = localStorage.getItem('token');
-			getArticleApi({
-				page: this.page,
-				number: this.showNumber
-			}).then((res) => {
-				// console.log(JSON.parse(JSON.stringify(res.data)));
-				let deepRes = Object.values(JSON.parse(JSON.stringify(res.data))); //把对象变成一个数组
-
-				let top = deepRes.filter((p) => { //筛选需要置顶的数组
-					return p.top
-				})
-
-				let common = deepRes.filter((p) => { //筛选没有置顶的数组
-					return !p.top
-				})
-				if (top.length > 0) { //重新排序，把需要置顶的数据放在头部
-					for (let i = 0; i < top.length; i++) {
-						common.unshift(top[i])
-					}
-				}
-				this.article = common;
-			});
+			this.getData();
 		}
 	}
 </script>
@@ -157,7 +167,13 @@
 	.scroll-box {
 		border-bottom: 1px solid #cbcaca;
 	}
-
+	
+	.top-title-box{
+		.active{
+			color: #dd0000;
+			font-weight: 600;
+		}
+	}
 	.top-title span {
 		margin: 5px 10px;
 		display: inline-block;

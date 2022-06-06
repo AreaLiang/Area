@@ -4,9 +4,9 @@
 			<searchbox searchPlaceholder="TV9833航班大火被扑灭" /><!-- 搜索框 -->
 		</view>
 		<view class="vedio-item" v-for="(p,index) in vedioData" :key="index">
-			<!-- <view class="vedio-img">
-				<p class="title">{{p.videoinfo.title}}</p>
-				<uni-icons custom-prefix="iconfont" type="icon-bofang" style="position: absolute;top:50%;left:50%; transform: translate(-50%, -50%);color: #5a5a5a;" size="50" ></uni-icons>
+			<view class="vedio-img">
+			<!-- 	<p class="title">{{p.videoinfo.title}}</p> -->
+				<img src="/static/start.png" class="start-img">
 				<img :src="p.videoinfo.cover">
 			</view>
 			<view class="vedio-info">
@@ -24,7 +24,7 @@
 						<span>看正片</span>
 					</uni-col>
 				</uni-row>
-			</view> -->
+			</view>
 		</view>
 	</view>
 </template>
@@ -92,5 +92,13 @@
 	}
 	.box-bg {
 		background: #d04542;
+	}
+	.start-img{
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		left: 50%;
+		top:50%;
+		transform: translate(-50%,-50%);
 	}
 </style>

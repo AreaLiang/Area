@@ -6,35 +6,37 @@
 		</view>
 		<view class="tip">每10分钟更新一次</view>
 		<view class="news-list">
-			<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
-				@scrolltolower="lower" style="height: 100%;">
+			<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
+				style="height: 100%;">
 				<view class="item" v-for="(p,index) in NewsList" :key="index">
-					<uni-row :gutter="10">
-						<uni-col :span="2">
-							<view class="sp-item num">
-								<span>{{parseInt(index)+1}}</span>
-							</view>
-						</uni-col>
-						<uni-col :span="18">
-							<view class="sp-item title-box">
-								<span class="title">{{p.title}}</span>
-							</view>
-						</uni-col>
-						<uni-col :span="4" style="text-align: right;">
-							<view class="sp-item" v-if="p.status=='hot'?true:false">
-								<uni-icons class="status" custom-prefix="iconfont" type="icon-remen" size="4vw"
-									color="red"></uni-icons>
-							</view>
-							<view class="sp-item">
-								<uni-icons class="icon-box" type="right" size="15"></uni-icons>
-							</view>
-						</uni-col>
-					</uni-row>
+					<navigator url="/src/pages/index/HotList/Articel_HotList" >
+						<uni-row :gutter="10">
+							<uni-col :span="2">
+								<view class="sp-item num">
+									<span>{{parseInt(index)+1}}</span>
+								</view>
+							</uni-col>
+							<uni-col :span="18">
+								<view class="sp-item title-box">
+									<span class="title">{{p.title}}</span>
+								</view>
+							</uni-col>
+							<uni-col :span="4" style="text-align: right;">
+								<view class="sp-item" v-if="p.status=='hot'?true:false">
+									<uni-icons class="status" custom-prefix="iconfont" type="icon-remen" size="4vw"
+										color="red"></uni-icons>
+								</view>
+								<view class="sp-item">
+									<uni-icons class="icon-box" type="right" size="15"></uni-icons>
+								</view>
+							</uni-col>
+						</uni-row>
+					</navigator>
 				</view>
 				<uni-load-more iconType="circle" :status="status" />
 			</scroll-view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -49,8 +51,8 @@
 			return {
 				NewsList: [],
 				status: 'more',
-				page:1,
-				showNumber:15 //一页显示多少条数据
+				page: 1,
+				showNumber: 15 //一页显示多少条数据
 			}
 		},
 		methods: {
@@ -59,23 +61,23 @@
 			},
 			lower: function(e) {
 				this.page += 1;
-				this.status="loading";
+				this.status = "loading";
 				getArticleApi({
 					page: this.page,
 					number: this.showNumber
 				}).then((res) => {
-					
-					let data = Object.values( JSON.parse(JSON.stringify(res)).data );
-					let array=Object.values(JSON.parse(JSON.stringify(this.NewsList)));
-				
-					if(data.length>0){
+
+					let data = Object.values(JSON.parse(JSON.stringify(res)).data);
+					let array = Object.values(JSON.parse(JSON.stringify(this.NewsList)));
+
+					if (data.length > 0) {
 						array.push(...data);
-						this.NewsList=array;
-						this.status="more"
-					}else{
-						this.status="no-more"
+						this.NewsList = array;
+						this.status = "more"
+					} else {
+						this.status = "no-more"
 					}
-					
+
 				})
 			}
 		},
@@ -96,12 +98,13 @@
 
 <style scoped lang="less">
 	@import "@/static/iconfont.css";
-	
-	.hostlist{
+
+	.hostlist {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
 	}
+
 	.top-img {
 		img {
 			display: inherit;
@@ -128,6 +131,7 @@
 	.news-list {
 		flex: 1;
 		overflow: hidden;
+
 		.item {
 			border-bottom: 1px solid #dddddd;
 

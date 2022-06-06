@@ -12,6 +12,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 //     axios.defaults.baseURL = 'http://192.168.0.24:3000/api';
 // } else if (process.env.NODE_ENV == 'production') {    
 //     axios.defaults.baseURL = 'http://192.168.0.24:3000/api';
+//     console.log = function () {};
 // }
 
 axios.defaults.baseURL = 'http://localhost:8080/api';

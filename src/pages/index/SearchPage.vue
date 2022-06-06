@@ -40,7 +40,8 @@
 			</view>
 		</view>
 		
-		<component :is="Searched?'searchForArticles':''" :searchText=searchText />
+		<component :is="Searched?'searchForArticles':''" :searchText='searchText' />
+		
 	</view>
 </template>
 
@@ -107,6 +108,7 @@
 		},
 		methods: {
 			search(res) {
+				
 				let data = JSON.parse(JSON.stringify(this.record));
 				let value = {
 					name: res.value
@@ -131,6 +133,8 @@
 				}
 				this.record = data;
 				this.Searched=true;
+				this.searchText = res.value;
+				this.$bus.$emit('searchChange',this.searchText);
 			},
 			QuickSearch(val) {
 				this.searchText = val;

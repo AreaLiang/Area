@@ -2,7 +2,7 @@
 	<view class="">
 		<view class="title-list">
 			<view class="title-item" v-for="(p,index) in titleList" :key="index">
-				<navigator :url="p.url">
+				<navigator :url="p.url" open-type="redirect">
 					<span :class="{active:actIndex==index ? true:false }" @click="activeFun(index,p.componentName)">{{p.name}}</span>
 				</navigator>
 			</view>

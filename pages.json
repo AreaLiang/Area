@@ -49,7 +49,7 @@
 			}
 		},
 		{
-			"path": "src/pages/index/HotList",
+			"path": "src/pages/index/HotList/HotList",
 			"style": {
 				"navigationBarTitleText": "热榜",
 				"navigationStyle":"custom"
@@ -188,6 +188,17 @@
 			"meta": {
 				"needLogin": true
 			}
+		},
+		{
+			"path": "src/pages/index/HotList/Articel_HotList",
+			"style": {
+				"navigationBarTitleText": "",//热榜二级页面
+				"navigationBarBackgroundColor": "white"
+				// "navigationStyle":"custom"
+			},
+			"meta": {
+				"needLogin": true
+			}
 		}
 		
 	],
@@ -219,7 +230,7 @@
 				"selectedIconPath": "static/bottomNavIcon/video-active.svg"
 			},
 			{
-				"pagePath": "src/pages/index/HotList",
+				"pagePath": "src/pages/index/HotList/HotList",
 				"text": "热榜",
 				"iconPath": "static/bottomNavIcon/Hot.svg",
 				"selectedIconPath": "static/bottomNavIcon/Hot-active.svg"

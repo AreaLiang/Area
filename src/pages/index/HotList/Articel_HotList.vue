@@ -1,0 +1,45 @@
+<template>
+	<view class="articel_HotList">
+		<view class="title">
+			<h2>持续关注 | 神州十四号载人飞船发射取得圆满成功</h2>
+		</view>
+		<view class="content">
+			<span style="color: blue;font-size: 5vw;font-weight: 600;">6月5日11时01分消息</span><br>
+			<span style="color: #0d9fcb;font-size: 4.5vw;">神州十四号载人飞船发射取得圆满成功</span><br>
+			<img src="/static/hotList/hotList01.jpg" class="pic">
+			据中国载人航天工程办公室消息，北京时间2022年6月5日10时44分，搭载神舟十四号载人飞船的长征二号F遥十四运载火箭在酒泉卫星发射中心点火发射，约577秒后，神舟十四号载人飞船与火箭成功分离，进入预定轨道，飞行乘组状态良好，发射取得圆满成功。<br>
+			<img src="/static/hotList/hotList02.jpg" class="pic">
+			南充新闻网讯（南充日报社全媒体记者 李奎 韩顺顺 见习记者 李笑阳 郑锐）北京时间6月5日10时44分，搭载神舟十四号载人飞船的长征二号F遥十四运载火箭在酒泉卫星发射中心成功点火发射。随后，酒泉卫星发射中心主任、发射场区指挥部指挥长邹利鹏宣布“神舟十四号载人飞船发射任务取得圆满成功”。
+		</view>
+	</view>
+</template>
+
+<script>
+	export default{
+		name:'Articel_HotList',//热榜二级页面
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+		
+		},
+		components:{
+			
+		}
+	}
+</script>
+
+<style scoped lang="less">
+	.articel_HotList{
+		padding: 8px;
+		line-height: 30px;
+		.pic{
+			width: 100%;
+		}
+		.title{
+			margin-bottom: 10px;
+		}
+	}
+</style>

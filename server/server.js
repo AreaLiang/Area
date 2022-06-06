@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const areaArray=require('./areaList');
 const articleArray=require('./article');
+const searchArray=require('./search');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -164,6 +165,22 @@ app.post('/vedio',(req,res)=>{
 	
 	let array=data.slice(number*(page-1),number*page);
 	
+	postData.list=Math.ceil(length/number);
+	postData.data = Object.assign({}, array);
+	postData =Object.assign(postData,req.body);
+	
+	res.send(postData);
+})
+
+//获取 搜索内容
+app.post('/search',(req,res)=>{
+	let data=searchArray.T1348647853363;
+	let page=req.body.page || 1;
+	let number =req.body.number || 5;
+	let length=data.length;
+	
+	let postData = new resFun();
+	let array=data.slice(number*(page-1),number*page);
 	postData.list=Math.ceil(length/number);
 	postData.data = Object.assign({}, array);
 	postData =Object.assign(postData,req.body);
