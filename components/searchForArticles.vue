@@ -17,8 +17,38 @@
 				</view>
 			</view>
 		</scroll-view>
-		<scroll-view scroll-y="true" class="scroll-Y" style="height: 100%;padding-bottom: 20px;">
+		<scroll-view scroll-y="true" class="scroll-Y" style="height: 100%;">
 			<view class="wrap">
+				<view class="latest-news">
+					<view class="type tx">
+						最新资讯
+					</view>
+					<view class="latest-title tx" v-html="acticelList[0].ltitle"></view>
+					<p class="time">7小时前</p>
+					<view class="content">
+						{{acticelList[0].digest}}
+					</view>
+					<view class="detail">
+						<span>{{acticelList[0].source}}</span>
+						<view>
+							<button class="mini-btn" type="warn" size="mini">查看全文</button>
+						</view>
+					</view>
+					<view class="type tx">
+						相关内容
+					</view>
+					<view class="related-Information">
+						<uni-row :gutter="20">
+							<uni-col :span="16">
+								<span v-html="acticelList[1].ltitle"></span>
+								<p style="margin-top:10px;">{{acticelList[1].source}}</p>
+							</uni-col>
+							<uni-col :span="8">
+								<img :src="acticelList[2].imgsrc" class="ac-cover" style="width: 100%;">
+							</uni-col>
+						</uni-row>
+					</view>
+				</view>
 				<view class="card" v-for="(p,index) in acticelList" :key="index">
 					<view class="title" v-html="p.ltitle"></view>
 					<view class="content">
@@ -124,10 +154,38 @@
 </script>
 
 <style lang="less">
+	.item_style (){
+		margin: 5px;
+		border: 1px solid #DCDCDC;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 1px;
+		border-radius: 4px;
+		padding: 0px 10px;
+		color: #6a6a6a;
+	}
 	.searchForArticles {
 		flex: 1;
 		overflow: hidden;
 		
+		.latest-news{
+			background: linear-gradient(180deg,rgba(176,196,222,.3) 10.76%,rgba(242,245,247,0))!important;
+			.item_style;
+			.tx{
+				color: #242424;
+				font-weight: 600;
+				font-size: 5vw;
+				margin: 5px 0;
+			}
+			.latest-title,
+			.time,
+			.detail{
+				margin: 10px 0;
+			}
+			.detail{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+		}
 		.top-title-box{
 			
 			.top-title span {
@@ -141,12 +199,7 @@
 		}
 		
 		.card {
-			margin: 5px;
-			border: 1px solid #DCDCDC;
-			box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 1px;
-			border-radius: 4px;
-			padding: 0px 10px;
-			color: #6a6a6a;
+			.item_style;
 
 			.title {
 				padding: 8px 0;
@@ -179,8 +232,8 @@
 		}
 
 		.wrap {
-			padding-bottom: 10px;
+			padding-bottom: 50px;
 		}
-
+		
 	}
 </style>

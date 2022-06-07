@@ -78,18 +78,18 @@
 								url: '../pages/index/HomePage'
 							});
 							
-							setTimeout(()=>{//登录超时
-								uni.showToast({
-									title: '登录超时',
-									duration: 1000
-								});
-								setTimeout(()=>{
-									localStorage.removeItem('token')
-									uni.redirectTo({
-										url: '/src/pages/Login'
-									});
-								},1000)
-							},1200000)
+							// setTimeout(()=>{//登录超时
+							// 	uni.showToast({
+							// 		title: '登录超时',
+							// 		duration: 1000
+							// 	});
+							// 	setTimeout(()=>{
+							// 		localStorage.removeItem('token')
+							// 		uni.redirectTo({
+							// 			url: '/src/pages/Login'
+							// 		});
+							// 	},1000)
+							// },1200000)
 						}else{
 							this.$refs.popup.open('top');
 						}

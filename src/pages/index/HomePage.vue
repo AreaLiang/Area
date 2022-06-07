@@ -32,28 +32,30 @@
 				<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower"  style="height: 100%;">
 					<view class="item" v-for="(p,index) in article" :key="index">
-						<h3 class="title">{{p.title}}</h3>
-						<view class="article-img" v-if="p.ads?true:false">
-							<uni-row :gutter="10">
-								<uni-col v-for="imgItem in p.ads.slice(0,3)" :span="8">
-									<img :src="imgItem.imgsrc" alt="imgItem.title">
-								</uni-col>
-							</uni-row>
-						</view>
-						<view class="acticle-video" v-if="p.boardid=='video_bbs'">
-							<uni-row>
-								<uni-col :span="24">
-									<video controls :src="p.videoinfo.mp4_url"
-										style="width: 100%;margin: 10px 0;"></video>
-								</uni-col>
-							</uni-row>
-						</view>
-						<view class="article-info">
-							<span v-show="p.top?true :false" class="top-span">置顶</span>
-							<span>{{p.source}}</span>
-							<span>{{p.replyCount}} 评论</span>
-							<span v-show="p.top?false :true">{{p.downTimes}}小时前</span>
-						</view>
+						<navigator url="/src/pages/index/HotList/Articel_HotList">
+							<h3 class="title">{{p.title}}</h3>
+							<view class="article-img" v-if="p.ads?true:false">
+								<uni-row :gutter="10">
+									<uni-col v-for="imgItem in p.ads.slice(0,3)" :span="8">
+										<img :src="imgItem.imgsrc" alt="imgItem.title">
+									</uni-col>
+								</uni-row>
+							</view>
+							<view class="acticle-video" v-if="p.boardid=='video_bbs'">
+								<uni-row>
+									<uni-col :span="24">
+										<video controls :src="p.videoinfo.mp4_url"
+											style="width: 100%;margin: 10px 0;"></video>
+									</uni-col>
+								</uni-row>
+							</view>
+							<view class="article-info">
+								<span v-show="p.top?true :false" class="top-span">置顶</span>
+								<span>{{p.source}}</span>
+								<span>{{p.replyCount}} 评论</span>
+								<span v-show="p.top?false :true">{{p.downTimes}}小时前</span>
+							</view>
+						</navigator>
 					</view>
 					
 					<uni-load-more iconType="circle" :status="status" />

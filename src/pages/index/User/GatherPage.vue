@@ -48,5 +48,7 @@
 <style scoped lang="less">
 	.notice-page{
 		height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
