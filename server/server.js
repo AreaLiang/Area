@@ -2,10 +2,15 @@ let express = require('express');
 const Mock = require('mockjs');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const formidable = require('formidable');
+const fs = require("fs");
+var path = require("path");
 
-const areaArray=require('./areaList');
-const articleArray=require('./article');
-const searchArray=require('./search');
+const areaArray = require('./areaList');
+const articleArray = require('./article');
+const searchArray = require('./search');
+
+
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -16,6 +21,9 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 // app.use(express.json())
+
+app.use(express.static('./'));//配置静态文件路径
+
 
 app.post('/test', (req, res) => {
 	console.log("请求头部：", {
@@ -60,17 +68,17 @@ app.post('/test', (req, res) => {
 
 /*国际手机区号*/
 app.get('/areaList', (req, res) => {
-	let datalist=JSON.parse(JSON.stringify(areaArray));
-	let postData= new resFun(datalist,'成功');
+	let datalist = JSON.parse(JSON.stringify(areaArray));
+	let postData = new resFun(datalist, '成功');
 	res.send(postData);
 })
 
 //登录
-app.post('/login',(req,res)=>{
+app.post('/login', (req, res) => {
 	let token = createToken('', 3600);
 	let postData = new resFun(req.body, "成功");
 	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
-		
+
 		let userInfo = Mock.mock({
 			"aa|5": [{
 				"number|1-100": 60,
@@ -87,10 +95,10 @@ app.post('/login',(req,res)=>{
 				'id': '@increment'
 			}]
 		})
-		
+
 		postData.data = Object.assign(postData.data, userInfo);
 		postData.token = token;
-		
+
 		res.send(postData);
 	} else {
 		res.send(postData.fail("账号或者密码错误"));
@@ -98,36 +106,40 @@ app.post('/login',(req,res)=>{
 })
 
 //用户信息校验
-app.post('/checkInfo',(req,res)=>{
-	console.log(tokenExp({...req.headers}.authorization).time)
-	let token={...req.headers}.authorization;
-	if(tokenExp(token).value){
-			let postData = new resFun(req.body, "成功");
-			let userInfo = Mock.mock({
-				"aa|5": [{
-					"number|1-100": 60,
-					"city|1": {
-						"310000": "上海市",
-						"320000": "江苏省",
-						"330000": "浙江省",
-						"340000": "安徽省",
-						"350000": "广东省",
-						"360000": "湖北省"
-					},
-					'phone|1': "req.body.userId",
-					'data': '@datetime',
-					'id': '@increment'
-				}]
-			})
-			
-			postData.data = Object.assign(postData.data, userInfo);
-			postData.token = token;
-			
-			
-			setTimeout(()=>{
-				res.send(postData);
-			},500)
-	}else{
+app.post('/checkInfo', (req, res) => {
+	console.log(tokenExp({
+		...req.headers
+	}.authorization).time)
+	let token = {
+		...req.headers
+	}.authorization;
+	if (tokenExp(token).value) {
+		let postData = new resFun(req.body, "成功");
+		let userInfo = Mock.mock({
+			"aa|5": [{
+				"number|1-100": 60,
+				"city|1": {
+					"310000": "上海市",
+					"320000": "江苏省",
+					"330000": "浙江省",
+					"340000": "安徽省",
+					"350000": "广东省",
+					"360000": "湖北省"
+				},
+				'phone|1': "req.body.userId",
+				'data': '@datetime',
+				'id': '@increment'
+			}]
+		})
+
+		postData.data = Object.assign(postData.data, userInfo);
+		postData.token = token;
+
+
+		setTimeout(() => {
+			res.send(postData);
+		}, 500)
+	} else {
 		let postData = new resFun();
 		res.send(postData.fail("账号或者密码错误"));
 	}
@@ -135,62 +147,107 @@ app.post('/checkInfo',(req,res)=>{
 })
 
 //获取文章列表
-app.post('/article',(req,res)=>{
-	let data=articleArray.T1348647853363;
-	let page=req.body.page || 1;
-	let number =req.body.number || 5;
-	let length=data.length;
-	
+app.post('/article', (req, res) => {
+	let data = articleArray.T1348647853363;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+
 	let postData = new resFun();
-	let array=data.slice(number*(page-1),number*page);
-	postData.list=Math.ceil(length/number);
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
 	postData.data = Object.assign({}, array);
-	postData =Object.assign(postData,req.body);
-	
+	postData = Object.assign(postData, req.body);
+
 	res.send(postData);
 })
 
 //获取视频列表
-app.post('/vedio',(req,res)=>{
-	let data=articleArray.T1348647853363;
-	let page=req.body.page || 1;
-	let number =req.body.number || 5;
-	let length=data.length;
-	
+app.post('/vedio', (req, res) => {
+	let data = articleArray.T1348647853363;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+
 	let postData = new resFun();
-	
-	data=data.filter((p)=>{
-		return p.boardid=="video_bbs"
+
+	data = data.filter((p) => {
+		return p.boardid == "video_bbs"
 	});
-	
-	let array=data.slice(number*(page-1),number*page);
-	
-	postData.list=Math.ceil(length/number);
+
+	let array = data.slice(number * (page - 1), number * page);
+
+	postData.list = Math.ceil(length / number);
 	postData.data = Object.assign({}, array);
-	postData =Object.assign(postData,req.body);
-	
+	postData = Object.assign(postData, req.body);
+
 	res.send(postData);
 })
 
 //获取 搜索内容
-app.post('/search',(req,res)=>{
-	let data=searchArray.T1348647853363;
-	let page=req.body.page || 1;
-	let number =req.body.number || 5;
-	let length=data.length;
-	
+app.post('/search', (req, res) => {
+	let data = searchArray.T1348647853363;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+
 	let postData = new resFun();
-	let array=data.slice(number*(page-1),number*page);
-	postData.list=Math.ceil(length/number);
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
 	postData.data = Object.assign({}, array);
-	postData =Object.assign(postData,req.body);
-	
+	postData = Object.assign(postData, req.body);
+
 	res.send(postData);
+})
+
+app.post('/upload', (req, res) => {
+
+
+	const form = new formidable.IncomingForm();
+	//设置编辑
+	form.encoding = "utf-8";
+
+	// 多文件可以传入 options 对象，设置 multiples: true
+	// 详见文档：https://www.npmjs.com/package/formidable
+	form.uploadDir = "./file/img" // 上传目录
+	// 解析 req 并上载所有相关文件
+	form.parse(req, (err, fields, files) => {
+		if (err != null) {
+			console.log(err)
+			return res.status(400).json({
+				message: err.message
+			})
+		}
+
+		// files 对象包含已上载的所有文件。Formidable 将解析每个文件并为您上载到临时文件。
+		const [firstFileName] = Object.keys(files)
+
+		console.log("66", files.file)
+		var dir = form.uploadDir;
+		var oldpath = files.file.filepath; //临时保存路径
+		var extname = path.extname(files.file.originalFilename);
+		var newpath = path.join(dir, files.file.newFilename) + extname;
+
+
+		fs.rename(oldpath, newpath, function(err) {
+			if (err) {
+				console.log("改名失败")
+			} else {
+				console.log("改名成功")
+			}
+		})
+		
+		res.json({
+			filename: newpath
+		})
+	})
+
 })
 
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })
+
 
 //ES 6构造函数，用于成功返回用户数据
 class resFun {
@@ -198,13 +255,13 @@ class resFun {
 		this.data = data;
 		this.mes = mes;
 		this.token = "";
-		this.code ="200";
+		this.code = "200";
 	}
 	fail(errorMes) {
 		return {
 			data: {},
 			mes: errorMes,
-			code:"0"
+			code: "0"
 		}
 	}
 }
@@ -247,10 +304,10 @@ let verifyToken = function(token) {
 function tokenExp(token) {
 	let verify = verifyToken(token);
 	let time = parseInt((new Date().getTime()) / 1000);
-	
-	let res={
-		'value':verify.obj.exp - time,
-		'time':`剩余${verify.obj.exp - time}秒`
+
+	let res = {
+		'value': verify.obj.exp - time,
+		'time': `剩余${verify.obj.exp - time}秒`
 	}
 	return res;
 }
