@@ -15,7 +15,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 //     console.log = function () {};
 // }
 
-axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.baseURL = 'http://localhost:8081/api';
 // axios.defaults.baseURL = 'http://192.168.0.24:8080/api';
 
 // 请求拦截器

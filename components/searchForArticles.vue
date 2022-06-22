@@ -115,11 +115,12 @@
 				}
 				this.acticelList = newActicelList;
 			},
-			getSearchData(){
+			getSearchData(){//搜索请求
 				searchApi({
 					page: 1,
 					number: 15
 				}).then((res) => {
+				
 					if (res.code == "200") {
 						let data = Object.values(res.data); //对象转数组
 						data = JSON.parse(JSON.stringify(data));

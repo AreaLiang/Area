@@ -9,7 +9,7 @@
 			<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
 				style="height: 100%;">
 				<view class="item" v-for="(p,index) in NewsList" :key="index">
-					<navigator url="/src/pages/index/HotList/Articel_HotList" >
+					<navigator :url="`/src/pages/index/HotList/Articel_HotList?id=${index}`">
 						<uni-row :gutter="10">
 							<uni-col :span="2">
 								<view class="sp-item num">
@@ -43,7 +43,7 @@
 <script>
 	import searchbox from '@/components/searchBox'
 	import {
-		getArticleApi
+		getHotListApi
 	} from '@/request/api.js'
 	export default {
 		name: 'HotList',
@@ -62,7 +62,7 @@
 			lower: function(e) {
 				this.page += 1;
 				this.status = "loading";
-				getArticleApi({
+				getHotListApi({
 					page: this.page,
 					number: this.showNumber
 				}).then((res) => {
@@ -81,16 +81,29 @@
 				})
 			}
 		},
+		watch:{
+			NewsList:function(){
+				// this.$store.commit('module_hotList/saveArticleList',this.NewsList)
+				sessionStorage.setItem('saveArticleList',JSON.stringify(this.NewsList))
+			},
+		},
 		components: {
 			searchbox
 		},
 		onReady() {
-			getArticleApi({
-				page: this.page,
-				number: this.showNumber
-			}).then((res) => {
-				console.log(JSON.parse(JSON.stringify(res)));
-				this.NewsList = res.data
+			// getArticleApi({
+			// 	page: this.page,
+			// 	number: this.showNumber
+			// }).then((res) => {
+			// 	console.log(JSON.parse(JSON.stringify(res)));
+			// 	this.NewsList = res.data
+			// })
+			getHotListApi({
+				page:1,
+				number:15
+			}).then((res)=>{
+				console.log("66",JSON.parse(JSON.stringify(res)));
+				this.NewsList = res.data;
 			})
 		}
 	}

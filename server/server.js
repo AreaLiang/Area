@@ -9,7 +9,7 @@ var path = require("path");
 const areaArray = require('./areaList');
 const articleArray = require('./article');
 const searchArray = require('./search');
-
+const hotList = require('./hotList');
 
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
@@ -242,6 +242,38 @@ app.post('/upload', (req, res) => {
 		})
 	})
 
+})
+
+let hotlist=hotList //保存上传过来的文章
+
+//用户发布文章
+app.post('/hotList',(req,res)=>{
+	let req_article=req.body;
+	let id=hotlist.length;
+	req_article.id=id+1
+	
+	hotlist.unshift(req_article);
+	
+	//返回信息
+	let sendData=new resFun(hotlist,'提交成功');
+	res.send(sendData);
+})
+
+//获取热门文章内容
+app.post('/getHotList',(req,res)=>{
+	
+	let data = hotlist;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+	
+	let postData = new resFun();
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
+	postData.data = Object.assign({}, array);
+	postData = Object.assign(postData, req.body);
+	
+	res.send(postData);
 })
 
 let server = app.listen(5000, () => {
