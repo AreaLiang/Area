@@ -10,7 +10,7 @@ const areaArray = require('./areaList');
 const articleArray = require('./article');
 const searchArray = require('./search');
 const hotList = require('./hotList');
-
+const articleManagement = require('./articleManagement');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -263,6 +263,41 @@ app.post('/hotList',(req,res)=>{
 app.post('/getHotList',(req,res)=>{
 	
 	let data = hotlist;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+	
+	let postData = new resFun();
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
+	postData.data = Object.assign({}, array);
+	postData = Object.assign(postData, req.body);
+	
+	res.send(postData);
+})
+
+//获取 文章管理 内容
+app.post('/articleManagement',(req,res)=>{
+	
+	let data = articleManagement.data;
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+	
+	let postData = new resFun();
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
+	postData.data = Object.assign({}, array);
+	postData = Object.assign(postData, req.body);
+	
+	res.send(postData);
+})
+
+console.log(articleManagement)
+//获取 文章管理 搜索内容
+app.post('/articleMgeSearch',(req,res)=>{
+	
+	let data = articleManagement.data;
 	let page = req.body.page || 1;
 	let number = req.body.number || 5;
 	let length = data.length;
