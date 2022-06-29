@@ -11,6 +11,7 @@ const articleArray = require('./article');
 const searchArray = require('./search');
 const hotList = require('./hotList');
 const articleManagement = require('./articleManagement');
+const { stringify } = require('querystring');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -293,11 +294,115 @@ app.post('/articleManagement',(req,res)=>{
 	res.send(postData);
 })
 
-console.log(articleManagement)
+
 //获取 文章管理 搜索内容
 app.post('/articleMgeSearch',(req,res)=>{
 	
+	let data =articleManagement.data;
+	let search_val=JSON.parse(req.body.searchList);
+	
+	if(search_val.content){
+		let reg=new RegExp(search_val.content);
+		data=data.filter((p)=>{
+			return reg.test(p.title)
+		});
+	}
+	
+	if(search_val.statusType!='all'){
+		data=data.filter((p)=>{
+			return p.status==ArtMegSelectChange(search_val.statusType)
+		});
+	}
+	
+	if(search_val.articleType!='all'){
+		data=data.filter((p)=>{
+			return p.articleType==ArtMegSelectChange(search_val.articleType)
+		});
+	}
+	
+	if(search_val.dateRange.length>0){
+		data=data.filter((p)=>{
+			let start=search_val.dateRange[0];
+			let end=search_val.dateRange[1];
+			
+			const regFun=(val)=>{
+				let reg=new RegExp('-','g');
+				return parseInt(val.replace(reg,''));
+			}
+			
+			start=regFun(start);
+			end=regFun(end);
+			
+			return start <= regFun(p.publishDate) && regFun(p.publishDate) <= end;
+		});
+		
+	}
+	
+	let page = req.body.page || 1;
+	let number = req.body.number || 5;
+	let length = data.length;
+	
+	let postData = new resFun();
+	let array = data.slice(number * (page - 1), number * page);
+	postData.list = Math.ceil(length / number);
+	postData.data = Object.assign({}, array);
+	postData = Object.assign(postData, req.body);
+	
+	res.send(postData);
+})
+
+//文章管理 下架功能和重新发布功能
+app.post('/artMegDown',(req,res)=>{
+	let data=req.body;
+	for(let item of articleManagement.data){
+		if(item.id==data.id){
+			if(data.opcode=='-1'){
+				item.status='已下架';
+			}else if(data.opcode=='1'){
+				item.status='已发布';
+			}
+		}
+	}
+	let postData = new resFun(data);
+	res.send(postData);
+})
+
+//文章管理 删除功能
+app.post('/artMegDel',(req,res)=>{
+	let data=req.body;
+	let map =new Map(Object.entries(articleManagement.data));
+
+	for(let [key, item] of Object.entries(articleManagement.data)){
+		if(item.id==data.id){
+			map.delete(key);
+			articleManagement.data=[...map.values()];
+		}
+	}
+
+	let postData = new resFun(articleManagement.data,'删除成功');
+	res.send(postData);
+})
+
+//文章管理 根据id 查询对应的文章
+app.post('/queryArticle',(req,res)=>{
+	let data=req.body;
+	let postData;
+	for(let item of articleManagement.data){
+		if(item.id==data.id){
+			postData= new resFun(item,'查询成功');
+		}
+	}
+	
+	res.send(postData||'没有对应的数据');
+})
+
+//获取 文章审核 内容
+app.post('/articleVerify',(req,res)=>{
+	
 	let data = articleManagement.data;
+	data =data.filter((p)=>{
+		return p.status=='审核中'
+	})
 	let page = req.body.page || 1;
 	let number = req.body.number || 5;
 	let length = data.length;
@@ -377,4 +482,23 @@ function tokenExp(token) {
 		'time': `剩余${verify.obj.exp - time}秒`
 	}
 	return res;
+}
+
+//文章管理 状态、文章类型 中文转拼音 
+function ArtMegSelectChange(val){
+	const obj={
+		'yfb':'已发布',
+		'yxj':'已下架',
+		'shz':'审核中',
+		'zhengzhi':'政治',
+		'tiyu':'体育',
+		'caijing':'财经',
+		'keji':'科技',
+		'yule':'娱乐',
+		'meishi':'美食'
+	}
+
+	let map =new Map(Object.entries(obj));
+	
+	return map.has(val) ? map.get(val) : '' ;
 }
