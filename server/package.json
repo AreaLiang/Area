@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "formidable": "^2.0.1",
+    "hexoid": "^1.0.0",
+    "once": "^1.4.0"
+  }
+}
