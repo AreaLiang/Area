@@ -28,48 +28,6 @@ app.use(bodyParser.json())
 
 app.use(express.static('./')); //配置静态文件路径
 
-
-app.post('/test', (req, res) => {
-	console.log("请求头部：", {
-		...req.headers
-	}.authorization);
-	console.log("主页 post 请求", req.body);
-
-	let token = createToken('', 60);
-	console.log("token", token);
-
-	let check = verifyToken(token);
-	console.log("解析", check, "时间：", tokenExp(token));
-
-	if (req.body.userId == "user004" && req.body.userPassword == "ab12345") {
-		let postData = new resFun(req.body, "成功");
-		console.log(postData)
-		let userInfo = Mock.mock({
-			"aa|5": [{
-				"number|1-100": 60,
-				"city|1": {
-					"310000": "上海市",
-					"320000": "江苏省",
-					"330000": "浙江省",
-					"340000": "安徽省",
-					"350000": "广东省",
-					"360000": "湖北省"
-				},
-				'phone|1': /\d{9,10}\-/,
-				'data': '@datetime',
-				'id': '@increment'
-			}]
-		})
-
-		postData = Object.assign(postData.data, userInfo);
-		postData.token = token;
-
-		res.send(postData);
-	} else {
-		res.send(postData.fail("账号或者密码错误"));
-	}
-})
-
 /*国际手机区号*/
 app.get('/areaList', (req, res) => {
 	let datalist = JSON.parse(JSON.stringify(areaArray));
@@ -279,6 +237,21 @@ app.post('/getHotList', (req, res) => {
 
 	res.send(postData);
 })
+
+//后台登录
+app.post('/areaBackLogin', (req, res) => {
+	let token = createToken('', 3600);
+	let {account,password}=req.body;
+	let currentAccount={};//保存账号的资料
+	let isPass=user_info.some((item)=>{
+		if(item.account===account && item.password===password){
+			currentAccount=item;
+			return true;
+		}
+	});
+	console.log(isPass)
+})
+
 
 //获取 文章管理 内容
 app.post('/articleManagement', (req, res) => {
