@@ -13,6 +13,8 @@ const searchArray = require('./search');
 const hotList = require('./hotList');
 const articleManagement = require('./articleManagement');
 const {stringify} = require('querystring');
+let {user_info,roleList,permissionNameList} =require('./userInfo')
+const { create } = require('domain');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -371,7 +373,8 @@ app.post('/artMegDown', (req, res) => {
 //文章管理 删除功能
 app.post('/artMegDel', (req, res) => {
 	let data = req.body;
-	let delList = JSON.parse(req.body.delList);
+	let delList;
+	if(req.body.delList) delList=JSON.parse(req.body.delList);
 	let map = new Map(Object.entries(articleManagement.data));
 
 
@@ -447,32 +450,6 @@ app.post('/articleVerify', (req, res) => {
 })
 
 
-let user_info = [{
-	id:1,
-	account: "1",
-	password: "1",
-	accountType: "admin",
-	name:'超级管理员',
-	status:'正常'
-},
-{
-	id:2,
-	account: "2",
-	password: "2",
-	accountType: "manager",
-	name:'普通管理员',
-	status:'正常'
-},
-{
-	id:3,
-	account: "3",
-	password: "3",
-	accountType: "editor",
-	name:'编辑者',
-	status:'正常'
-}
-];
-
 //机构管理 添加用户
 app.post('/addAccount', (req, res) => {
 	
@@ -508,10 +485,69 @@ app.post('/getAccountList', (req, res) => {
 	res.send(postData);
 })
 
+//机构管理 用户和用户权限
+app.get('/getPermissionInfo', (req, res) => {
+	let reset={
+		user_info:user_info,
+		permissionNameList:permissionNameList,
+		roleList:roleList
+	}
+	
+	let postData = new resFun(reset);
+	res.send(postData);
+})
+
+//用户管理 禁用账号功能
+app.post('/banAccount', (req, res) => {
+	let {id,opCode}=req.body;
+	
+	if(id && opCode){
+		user_info.map((item)=>{
+			if(item.id==id){
+				if(opCode== 0){
+					item.status= "已禁用";
+				}else if(opCode== 1){
+					item.status= "正常";
+				}
+			}
+		})
+		res.send(commonPost.success());
+	}
+
+})
+
+//用户管理 删除 账号功能
+app.post('/delAccount_PER', (req, res) => {
+	let {id}=req.body;
+	if(id){
+		user_info.some((item,index)=>{
+			if(item.id==id){
+				user_info.splice(index,1);
+				return;
+			}
+		})
+		res.send(commonPost.success());
+	}
+})
+
+//用户管理 修改 账号功能
+app.post('/modifyAccount_PER', (req, res) => {
+	let {id,password}=req.body;
+	if(id && password){
+		user_info.map((item)=>{
+			if(item.id==id){
+				item.password=password;
+			}
+		})
+		res.send(commonPost.success());
+	}else{
+		res.send(commonPost.fail());
+	}
+})
+
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })
-
 
 //ES 6构造函数，用于成功返回用户数据
 class resFun {
@@ -528,7 +564,16 @@ class resFun {
 			code: "0"
 		}
 	}
+	success(data,successMes){
+		return {
+			data: data || '',
+			mes: successMes || '成功',
+			code: this.code
+		}
+	}
 }
+
+let commonPost=new resFun();//常规 返回前端信息
 
 // 生成方法---data是自定义信息，exp是传的过期时间
 let createToken = function(data, exp) {
