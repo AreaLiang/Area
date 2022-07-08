@@ -15,6 +15,7 @@ const articleManagement = require('./articleManagement');
 const {stringify} = require('querystring');
 let {user_info,roleList,permissionNameList} =require('./userInfo')
 const { create } = require('domain');
+const { set } = require('express/lib/application');
 
 const secret = 'kelexiaoyu'; // 密钥，防止篡改，我就直接一个字符串了，不用密钥生成了
 
@@ -240,18 +241,58 @@ app.post('/getHotList', (req, res) => {
 
 //后台登录
 app.post('/areaBackLogin', (req, res) => {
-	let token = createToken('', 3600);
+	
 	let {account,password}=req.body;
 	let currentAccount={};//保存账号的资料
 	let isPass=user_info.some((item)=>{
 		if(item.account===account && item.password===password){
 			currentAccount=item;
+			currentAccount.roleList=roleList.filter((p)=>{
+				return p.accountType==item.accountType;
+			})
 			return true;
 		}
 	});
-	console.log(isPass)
+	let completeData=commonPost.success(currentAccount);
+	let token = createToken(currentAccount, 3600);
+	completeData.token=token;
+	
+	if(isPass){
+		res.send(completeData);
+	}else{
+		res.send(commonPost.fail());
+	}
 })
 
+//后台用户信息校验
+app.post('/areaBackCheckUserInfo',(req,res)=>{
+	let {token} =req.body;
+	console.log(verifyToken(token),tokenExp(token));
+	if(tokenExp(token)){
+		let solve=verifyToken(token);
+		let {account,password}=solve.obj.data;
+		let currentAccount={};//保存账号的资料
+		let isPass=user_info.some((item)=>{
+			if(item.account===account && item.password===password){
+				currentAccount=item;
+				currentAccount.roleList=roleList.filter((p)=>{
+					return p.accountType==item.accountType;
+				})
+				return true;
+			}
+		});
+		let completeData=commonPost.success(currentAccount);
+		completeData.token=token;
+		
+		if(isPass){
+			res.send(completeData);
+		}else{
+			res.send(commonPost.fail());
+		}
+	}else{
+		res.send(commonPost.fail('登录过时'));
+	}
+})
 
 //获取 文章管理 内容
 app.post('/articleManagement', (req, res) => {
@@ -526,7 +567,7 @@ let server = app.listen(5000, () => {
 class resFun {
 	constructor(data, mes) {
 		this.data = data;
-		this.mes = mes;
+		this.mes = mes ||'';
 		this.token = "";
 		this.code = "200";
 	}
