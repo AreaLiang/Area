@@ -239,6 +239,7 @@ app.post('/getHotList', (req, res) => {
 	res.send(postData);
 })
 
+let areaBackToken='';
 //后台登录
 app.post('/areaBackLogin', (req, res) => {
 	
@@ -256,6 +257,7 @@ app.post('/areaBackLogin', (req, res) => {
 	let completeData=commonPost.success(currentAccount);
 	let token = createToken(currentAccount, 3600);
 	completeData.token=token;
+	areaBackToken=token;
 	
 	if(isPass){
 		res.send(completeData);
@@ -266,9 +268,10 @@ app.post('/areaBackLogin', (req, res) => {
 
 //后台用户信息校验
 app.post('/areaBackCheckUserInfo',(req,res)=>{
+	
 	let {token} =req.body;
-	console.log(verifyToken(token),tokenExp(token));
-	if(tokenExp(token)){
+	// console.log(verifyToken(token),tokenExp(token));
+	if(tokenExp(token).value){
 		let solve=verifyToken(token);
 		let {account,password}=solve.obj.data;
 		let currentAccount={};//保存账号的资料
@@ -281,6 +284,7 @@ app.post('/areaBackCheckUserInfo',(req,res)=>{
 				return true;
 			}
 		});
+		
 		let completeData=commonPost.success(currentAccount);
 		completeData.token=token;
 		
@@ -296,19 +300,23 @@ app.post('/areaBackCheckUserInfo',(req,res)=>{
 
 //获取 文章管理 内容
 app.post('/articleManagement', (req, res) => {
-
-	let data = articleManagement.data;
-	let page = req.body.page || 1;
-	let number = req.body.number || 5;
-	let length = data.length;
-
-	let postData = new resFun();
-	let array = data.slice(number * (page - 1), number * page);
-	postData.list = Math.ceil(length / number);
-	postData.data = Object.assign({}, array);
-	postData = Object.assign(postData, req.body);
-
-	res.send(postData);
+	let token=req.headers.authorization;
+	if( areaBackToken===token && tokenExp(token).value){
+		let data = articleManagement.data;
+		let page = req.body.page || 1;
+		let number = req.body.number || 5;
+		let length = data.length;
+		
+		let postData = new resFun();
+		let array = data.slice(number * (page - 1), number * page);
+		postData.list = Math.ceil(length / number);
+		postData.data = Object.assign({}, array);
+		postData = Object.assign(postData, req.body);
+		res.send(postData);
+	}else{
+		res.send(commonPost.exp());
+	}
+	
 })
 
 
@@ -583,6 +591,12 @@ class resFun {
 			data: data || '',
 			mes: successMes || '成功',
 			code: this.code
+		}
+	}
+	exp(){
+		return {
+			mes: "用户信息过期",
+			code: "-1"
 		}
 	}
 }
