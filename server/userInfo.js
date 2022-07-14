@@ -41,35 +41,50 @@ let user_info = [{
 ]
 
 const permissionNameList = [{
-	id: 0,
-	name:"用户管理"
-},
- {
- 	id: 1,
- 	name:"用户权限分配"
- },
- {
- 	id: 2,
- 	name:"文章审核"
- },
- {
-	id:3,
-	name:"主页"
- }];
- 
+	id: 1,
+	child: [{
+			id: 100,
+			name: '文章管理',
+			child: [
+				{
+					id: 101,
+					name: '文章审核'
+				}
+			]
+		},
+		{
+			id: 200,
+			name: '机构管理',
+			child: [{
+					id: 201,
+					name: '用户管理'
+				},
+				{
+					id: 202,
+					name: '角色管理'
+				},
+				{
+					id: 203,
+					name: '账号申请'
+				}
+			]
+		}
+	]
+}];
+
 let roleList = [{
 		accountType: 'admin',
-		permissionList: [0, 1, 2, 3], //权限表，根据permissionNameList里面的索引来返回
+		permissionList: [1,101, 201, 202, 203], //权限表，根据permissionNameList里面的索引来返回
 		Description: '超级管理员，拥有所有权限的，唯一的账号'
 	},
 	{
 		accountType: 'super_editor',
-		permissionList: [0, 2, 3],
+		permissionList: [1,101, 201, 203],
 		Description: '管理员，拥有文章审批，用户密码修改，发布文章权限'
 	},
 	{
 		accountType: 'editor',
-		permissionList: [2, 3],
+		permissionList: [1],
 		Description: '作者，发表文章权限'
 	}
 ];
