@@ -211,15 +211,20 @@ let hotlist = hotList //保存上传过来的文章
 
 //用户发布文章
 app.post('/hotList', (req, res) => {
-	let req_article = req.body;
-	let id = hotlist.length;
-	req_article.id = id + 1
-
-	hotlist.unshift(req_article);
-
-	//返回信息
-	let sendData = new resFun(hotlist, '提交成功');
-	res.send(sendData);
+	if(checkTokenExpired(req)){
+		let req_article = req.body;
+		let id = hotlist.length;
+		req_article.id = id + 1
+		
+		hotlist.unshift(req_article);
+		
+		//返回信息
+		let sendData = new resFun(hotlist, '提交成功');
+		res.send(sendData);
+	}else{
+		res.send(commonPost.exp());
+	}
+	
 })
 
 //获取热门文章内容
@@ -268,10 +273,10 @@ app.post('/areaBackLogin', (req, res) => {
 
 //后台用户信息校验
 app.post('/areaBackCheckUserInfo',(req,res)=>{
-	
+
 	let {token} =req.body;
 	// console.log(verifyToken(token),tokenExp(token));
-	if(tokenExp(token).value){
+	if( areaBackToken===token && tokenExp(token).value && areaBackToken){
 		let solve=verifyToken(token);
 		let {account,password}=solve.obj.data;
 		let currentAccount={};//保存账号的资料
@@ -297,11 +302,16 @@ app.post('/areaBackCheckUserInfo',(req,res)=>{
 		res.send(commonPost.fail('登录过时'));
 	}
 })
+//后台用户 退出
+app.get('/areaBackuserExit',(req,res)=>{
+	areaBackToken = '';
+	res.send(commonPost.success());
+})
 
 //获取 文章管理 内容
 app.post('/articleManagement', (req, res) => {
 	let token=req.headers.authorization;
-	if( areaBackToken===token && tokenExp(token).value){
+	if( areaBackToken===token && tokenExp(token).value && areaBackToken){
 		let data = articleManagement.data;
 		let page = req.body.page || 1;
 		let number = req.body.number || 5;
@@ -399,7 +409,6 @@ app.post('/artMegDel', (req, res) => {
 	if(req.body.delList) delList=JSON.parse(req.body.delList);
 	let map = new Map(Object.entries(articleManagement.data));
 
-
 	for (let [key, item] of Object.entries(articleManagement.data)) {
 
 		if (delList) { //批量删除
@@ -436,22 +445,25 @@ app.post('/queryArticle', (req, res) => {
 
 //获取 文章审核 内容
 app.post('/getVerifyArticleList', (req, res) => {
+	if(checkTokenExpired(req)){
+		let data = articleManagement.data;
+		data = data.filter((p) => {
+			return p.status == '审核中'
+		})
+		let page = req.body.page || 1;
+		let number = req.body.number || 5;
+		let length = data.length;
 
-	let data = articleManagement.data;
-	data = data.filter((p) => {
-		return p.status == '审核中'
-	})
-	let page = req.body.page || 1;
-	let number = req.body.number || 5;
-	let length = data.length;
+		let postData = new resFun();
+		let array = data.slice(number * (page - 1), number * page);
+		postData.list = Math.ceil(length / number);
+		postData.data = Object.assign({}, array);
+		postData = Object.assign(postData, req.body);
 
-	let postData = new resFun();
-	let array = data.slice(number * (page - 1), number * page);
-	postData.list = Math.ceil(length / number);
-	postData.data = Object.assign({}, array);
-	postData = Object.assign(postData, req.body);
-
-	res.send(postData);
+		res.send(postData);
+	}else{
+		res.send(commonPost.exp());
+	}
 })
 
 //文章管理 审核通过功能和审核不通过功能
@@ -567,6 +579,16 @@ app.post('/modifyAccount_PER', (req, res) => {
 	}
 })
 
+//用户管理 权限分配
+app.post('/modifyUserPermission', (req, res) => {
+	let {id,newPm}=req.body;
+
+	roleList.map((p)=>{//找出对应id 的权限
+		if(p.id==id) p.permissionList=JSON.parse(newPm)
+	});
+	res.send(commonPost.success());
+})
+
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })
@@ -666,4 +688,10 @@ function ArtMegSelectChange(val) {
 	let map = new Map(Object.entries(obj));
 
 	return map.has(val) ? map.get(val) : '';
+}
+
+function checkTokenExpired(req){
+	let token=req.headers.authorization;
+	if( areaBackToken===token && tokenExp(token).value && areaBackToken) return true
+	else return false
 }
