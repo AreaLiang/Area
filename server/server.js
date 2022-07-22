@@ -164,8 +164,6 @@ app.post('/search', (req, res) => {
 })
 
 app.post('/upload', (req, res) => {
-
-
 	const form = new formidable.IncomingForm();
 	//设置编辑
 	form.encoding = "utf-8";
@@ -252,23 +250,29 @@ app.post('/areaBackLogin', (req, res) => {
 	let currentAccount={};//保存账号的资料
 	let isPass=user_info.some((item)=>{
 		if(item.account===account && item.password===password){
-			currentAccount=item;
-			currentAccount.roleList=roleList.filter((p)=>{
-				return p.accountType==item.accountType;
-			})
-			return true;
+			if(item.status=='已禁用'){
+				res.send(commonPost.fail('已被禁用'));
+				return false;
+			}else{
+				currentAccount=item;
+				currentAccount.roleList=roleList.filter((p)=>{
+					return p.accountType==item.accountType;
+				})
+				return true;
+			}
 		}
 	});
 	let completeData=commonPost.success(currentAccount);
-	let token = createToken(currentAccount, 3600);
+	let token = createToken(currentAccount, 5000);
 	completeData.token=token;
 	areaBackToken=token;
 	
 	if(isPass){
 		res.send(completeData);
 	}else{
-		res.send(commonPost.fail());
+		res.send(commonPost.fail("账号或者密码错误"));
 	}
+	
 })
 
 //后台用户信息校验
@@ -276,17 +280,22 @@ app.post('/areaBackCheckUserInfo',(req,res)=>{
 
 	let {token} =req.body;
 	// console.log(verifyToken(token),tokenExp(token));
-	if( areaBackToken===token && tokenExp(token).value && areaBackToken){
+	if( areaBackToken===token && tokenExp(token).value && areaBackToken ){
 		let solve=verifyToken(token);
 		let {account,password}=solve.obj.data;
 		let currentAccount={};//保存账号的资料
 		let isPass=user_info.some((item)=>{
 			if(item.account===account && item.password===password){
-				currentAccount=item;
-				currentAccount.roleList=roleList.filter((p)=>{
-					return p.accountType==item.accountType;
-				})
-				return true;
+				if(item.status=='已禁用'){
+					res.send(commonPost.fail('已被禁用'));
+					return false;
+				}else{
+					currentAccount=item;
+					currentAccount.roleList=roleList.filter((p)=>{
+						return p.accountType==item.accountType;
+					})
+					return true;
+				}
 			}
 		});
 		
@@ -335,7 +344,7 @@ app.post('/articleMgeSearch', (req, res) => {
 
 	let data = articleManagement.data;
 	let search_val = JSON.parse(req.body.searchList);
-
+	
 	if (search_val.content) {
 		let reg = new RegExp(search_val.content);
 		data = data.filter((p) => {
@@ -355,22 +364,24 @@ app.post('/articleMgeSearch', (req, res) => {
 		});
 	}
 
-	if (search_val.dateRange.length > 0) {
-		data = data.filter((p) => {
-			let start = search_val.dateRange[0];
-			let end = search_val.dateRange[1];
-
-			const regFun = (val) => {
-				let reg = new RegExp('-', 'g');
-				return parseInt(val.replace(reg, ''));
-			}
-
-			start = regFun(start);
-			end = regFun(end);
-
-			return start <= regFun(p.publishDate) && regFun(p.publishDate) <= end;
-		});
-
+	if(search_val.dateRange){
+		if (search_val.dateRange.length > 0) {
+			data = data.filter((p) => {
+				let start = search_val.dateRange[0];
+				let end = search_val.dateRange[1];
+		
+				const regFun = (val) => {
+					let reg = new RegExp('-', 'g');
+					return parseInt(val.replace(reg, ''));
+				}
+		
+				start = regFun(start);
+				end = regFun(end);
+		
+				return start <= regFun(p.publishDate) && regFun(p.publishDate) <= end;
+			});
+		
+		}
 	}
 
 	let page = req.body.page || 1;

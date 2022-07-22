@@ -25,7 +25,7 @@ let user_info = [{
 	{
 		id: "ew21",
 		account: "123224",
-		password: "12123",
+		password: "123",
 		accountType: "editor",
 		name: '编辑者',
 		status: '已禁用'
