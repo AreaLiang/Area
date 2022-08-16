@@ -47,10 +47,19 @@
 
 <style scoped lang="less">
 	@import '@/src/styles/index.less';
+	@fontSize:4vw;
 
 	.system-settings {
 		background-color: @backgroundColor;
-		overflow: hidden
+		overflow: hidden;
+		font-size: @fontSize;
+		/deep/ .uni-list-item__content-title,
+		/deep/ .uni-list-item__extra-text{
+			font-size: @fontSize;
+		}
+		/deep/ .uni-icon-wrapper{
+			font-size: @fontSize !important;
+		}
 	}
 
 	.list-box {

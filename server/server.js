@@ -600,6 +600,11 @@ app.post('/modifyUserPermission', (req, res) => {
 	res.send(commonPost.success());
 })
 
+// app.get('/wechat',(req, res)=>{
+// 	console.log(req.headers)
+// 	res.send(commonPost.success());
+// })
+
 let server = app.listen(5000, () => {
 	console.log("应用实例，访问地址为http://localhost:5000/")
 })

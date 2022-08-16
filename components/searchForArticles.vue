@@ -156,7 +156,7 @@
 
 <style lang="less">
 	.item_style (){
-		margin: 5px;
+		margin: 2vw 1vw;
 		border: 1px solid #DCDCDC;
 		box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 1px;
 		border-radius: 4px;

@@ -46,9 +46,21 @@
 </script>
 
 <style scoped lang="less">
+	
 	.notice-page{
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		/deep/ .uni-list-chat__header{
+			width: 10vw;
+			height: 10vw;
+		}
+		/deep/ .uni-list-chat__content-title{
+			font-size:4vw;
+		}
+		/deep/ .uni-list-chat__content-note{
+			font-size: 3vw;
+		}
+		
 	}
 </style>

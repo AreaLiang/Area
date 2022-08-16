@@ -14,7 +14,7 @@
 					<view class="user-name">
 						<view class="">
 							AreaLiang
-							<uni-icons type="right" size="15"></uni-icons>
+							<uni-icons type="right" size="4vw"></uni-icons>
 						</view>
 						<view class="apply-certification">
 							申请认证
@@ -38,26 +38,26 @@
 			</uni-col>
 		</uni-row>
 		<view class="item-box">
-			<scroll-view  scroll-y="true" class="scroll-Y" style="height: 100%;">
+			<scroll-view scroll-y="true" class="scroll-Y" style="height: 100%;">
 				<uni-card title="常用功能" margin="10px 0 10px 0" :border="false">
 					<uni-grid :column="4" :highlight="true" :showBorder="false">
 						<uni-grid-item v-for="(item, index) in commonFunctions" :index="index" :key="index">
 							<navigator :url="item.url">
-								<view class="grid-item-box" style="background-color: #fff;">
-									<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+								<view class="grid-item-box">
+									<uni-icons custom-prefix="iconfont" :type="item.icon" size="6vw" color="#777" />
 									<text class="text">{{item.name}}</text>
 								</view>
 							</navigator>
 						</uni-grid-item>
 					</uni-grid>
 				</uni-card>
-			
+
 				<uni-card title="更多功能" margin="10px 0 10px 0" :border="false">
 					<uni-grid :column="4" :highlight="true" :showBorder="false">
 						<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
 							<navigator :url="item.url">
-								<view class="grid-item-box" style="background-color: #fff;">
-									<uni-icons custom-prefix="iconfont" :type="item.icon" :size="25" color="#777" />
+								<view class="grid-item-box">
+									<uni-icons custom-prefix="iconfont" :type="item.icon" size="6vw" color="#777" />
 									<text class="text">{{item.name}}</text>
 								</view>
 							</navigator>
@@ -145,7 +145,7 @@
 						icon: "icon-gouwuche",
 						url: "",
 					}
-					
+
 				]
 			}
 		},
@@ -165,7 +165,7 @@
 <style scoped lang="less">
 	@import "@/static/iconfont.css";
 	@import '@/src/styles/index.less';
-	
+
 	.userPage {
 		overflow: auto;
 		background: #ebebeb;
@@ -173,8 +173,8 @@
 		flex-direction: column;
 		height: 100%;
 	}
-	
-	.item-box{
+
+	.item-box {
 		flex: 1;
 		overflow: hidden;
 	}
@@ -186,8 +186,8 @@
 		color: #2c2c2c;
 
 		.portrait-box {
-			width: 80px;
-			height: 80px;
+			width: 18vw;
+			height: 18vw;
 			border-radius: 50%;
 			border: 1px solid #e1dfdf;
 		}
@@ -208,11 +208,11 @@
 		.apply-certification {
 			background: #fdeaea;
 			border-radius: 10px 0 0 10px;
-			width: 75px;
-			height: 25px;
-			font-size: 14px;
+			width: 20vw;
+			height: 7vw;
+			font-size: 4vw;
 			text-align: center;
-			line-height: 25px;
+			line-height: 7vw;
 			color: #fb6161;
 			font-weight: 500;
 		}
@@ -234,7 +234,7 @@
 
 	.login-status {
 		background-color: white;
-		height: 120px;
+		height: 25vw;
 	}
 
 
@@ -248,8 +248,8 @@
 	}
 
 	.text {
-		font-size: 14px;
-		margin-top: 5px;
+		font-size: 4vw;
+		margin-top: 4vw;
 	}
 
 	.example-body {
@@ -264,7 +264,6 @@
 
 	.grid-item-box {
 		flex: 1;
-		// position: relative;
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
@@ -272,6 +271,10 @@
 		align-items: center;
 		justify-content: center;
 		padding: 15px 0;
+	}
+
+	.uni-grid-item {
+		align-items: center;
 	}
 
 	.grid-item-box-row {
@@ -297,7 +300,7 @@
 	}
 
 	/* #ifdef H5 */
-	@media screen and (min-width: 450px) {
+	@media screen and (max-width: 450px) {
 		.logged-box {
 			.user-name {
 				font-size: 20px;

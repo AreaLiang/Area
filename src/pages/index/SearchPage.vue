@@ -166,10 +166,21 @@
 
 <style scoped lang="less">
 	@import "@/static/iconfont.css";
+	@import "@/src/styles/index.less";
+	
 	.search-box{
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		.placeholderFontSize();
+		/deep/ .uni-searchbar__cancel{
+			font-size: 4vw;
+			line-height: initial;
+			
+		}
+		.uni-searchbar{
+			align-items: center;
+		}
 	}
 	.row-box {
 		border-top: 1px solid #dfdfdf;

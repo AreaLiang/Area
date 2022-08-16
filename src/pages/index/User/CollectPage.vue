@@ -59,7 +59,7 @@
 <script>
 	import viewArticleSection from '@/components/viewArticleSection.vue'
 	export default {
-		name: 'CollectPage',
+		name: 'CollectPage',//收藏
 		data() {
 			return {
 

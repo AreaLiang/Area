@@ -15,14 +15,14 @@
 						</view>
 					</view>
 				</uni-col>
-				<uni-col :span="6" :offset="4">
+				<uni-col :span="6" :offset="4" class="status_box">
 					<view class="status">
 						<p>已关注</p>
 					</view>
 				</uni-col>
 			</uni-row>
 		</view>
-		
+
 		<view class="list">
 			<uni-row>
 				<uni-col :span="14">
@@ -38,14 +38,14 @@
 						</view>
 					</view>
 				</uni-col>
-				<uni-col :span="6" :offset="4">
+				<uni-col :span="6" :offset="4" class="status_box">
 					<view class="status">
 						<p>已关注</p>
 					</view>
 				</uni-col>
 			</uni-row>
 		</view>
-		
+
 		<view class="list">
 			<uni-row>
 				<uni-col :span="14">
@@ -61,7 +61,7 @@
 						</view>
 					</view>
 				</uni-col>
-				<uni-col :span="6" :offset="4">
+				<uni-col :span="6" :offset="4" class="status_box">
 					<view class="status">
 						<p>已关注</p>
 					</view>
@@ -83,7 +83,7 @@
 						</view>
 					</view>
 				</uni-col>
-				<uni-col :span="6" :offset="4">
+				<uni-col :span="6" :offset="4" class="status_box">
 					<view class="status">
 						<p>已关注</p>
 					</view>
@@ -124,6 +124,7 @@
 		padding-top: 10px;
 		border-top: 1px solid #e7e7e7;
 		color: #303030;
+
 	}
 
 	.user-info {
@@ -140,13 +141,20 @@
 		}
 	}
 
+	.status_box {
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+	}
+
 	.user-info,
 	.status {
-		height: 75px;
 		display: flex;
 		align-items: center;
 	}
-	.status{
+
+	.status {
 		p {
 			border: 1px solid #cdc8c8;
 			padding: 3px 5px;

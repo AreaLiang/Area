@@ -16,3 +16,5 @@ export const getVedioApi = p => post('/vedio', p);//获取视频页面
 export const searchApi = p => post('/search', p);//获取搜索内容
 export const getHotListApi = p => post('/getHotList', p);//获取热门列表
 
+
+

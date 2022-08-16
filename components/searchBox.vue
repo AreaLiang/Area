@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<uni-search-bar class="search-input" radius="5" :placeholder="searchPlaceholder" clearButton="auto"
 			cancelButton="none" @focus="focus" />
 		<uni-popup ref="searchPopup" background-color="white" style="z-index: 999;">
@@ -31,11 +31,12 @@
 		components: {
 			SearchPage
 		},
-		props:['searchPlaceholder']
+		props: ['searchPlaceholder']
 	}
 </script>
 
 <style scoped lang="less">
+	@import "@/src/styles/index.less";
 	
 	.popup-content {
 		width: 100vw;
@@ -45,5 +46,7 @@
 	.search-input {
 		white-space: nowrap;
 		text-overflow: ellipsis;
+
+		.placeholderFontSize();
 	}
 </style>
