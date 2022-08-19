@@ -32,7 +32,7 @@
 				<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower"  style="height: 100%;">
 					<view class="item" v-for="(p,index) in article" :key="index">
-						<navigator url="/src/pages/index/HotList/Articel_HotList?id=1">
+						<navigator url="/src/pages/index/HomePage/articleShow">
 							<h3 class="title">{{p.title}}</h3>
 							<view class="article-img" v-if="p.ads?true:false">
 								<uni-row :gutter="10">

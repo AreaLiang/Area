@@ -11,6 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-shenfenzheng:before {
+  content: "\e634";
+}
+
 .icon-chengshifuwu:before {
   content: "\e600";
 }

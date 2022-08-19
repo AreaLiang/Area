@@ -18,7 +18,7 @@
 			}
 		},
 		{
-			"path": "src/pages/index/HomePage",
+			"path": "src/pages/index/HomePage/index",
 			"style": {
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom"
@@ -199,6 +199,26 @@
 			"meta": {
 				"needLogin": true
 			}
+		},
+		{
+			"path": "src/pages/index/User/ApplyForCertification",//申请认证
+			"style": {
+				"navigationBarTitleText": "", 
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/HomePage/articleShow",//首页文章 二级页面
+			"style": {
+				"navigationBarTitleText": "", 
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
 		}
 
 	],
@@ -221,7 +241,7 @@
 		"iconWidth": "6vw",
 		"spacing": "3px",
 		"list": [{
-				"pagePath": "src/pages/index/HomePage",
+				"pagePath": "src/pages/index/HomePage/index",
 				"text": "首页",
 				"iconPath": "static/bottomNavIcon/Home.svg",
 				"selectedIconPath": "static/bottomNavIcon/Home-active.svg"

@@ -11,7 +11,7 @@ export default {
 	state: {
 		currentArticleList: []
 	},
-	gutters: {
+	getters: {
 
 	}
 }

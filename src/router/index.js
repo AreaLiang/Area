@@ -21,23 +21,21 @@ router.beforeEach((to, from, next) => {
 			if(userData){
 				next();
 			}else{//页面刷新，用户数据不存在，重新请求
-				checkInfoApi({
-					token:token
-				}).then((res)=>{
-					if(res.code=="200"){
-						store.commit('LoginInfo',res);
-					}else{//如果返回数据不成功，则登录超时
+			
+				store.dispatch('checkUserInfo',token).catch(()=>{
+					
+					setTimeout(()=>{//不知明的冲突，需要加定时器才会显示
 						uni.showToast({
 							title: '登录超时',
 							duration: 1000
 						});
-						setTimeout(()=>{
-							localStorage.removeItem('token')
-							router.replace('/src/pages/Login');
-						},1000)
-					}
-				})
-				next();
+					},0)
+					
+					setTimeout(()=>{//提醒1秒自动转跳到登录界面
+						localStorage.removeItem('token')
+						router.replace('/src/pages/Login');
+					},1000)
+				}).finally(() => next());
 			}
 		}else{
 			router.replace('/src/pages/Login')

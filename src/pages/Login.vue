@@ -75,7 +75,7 @@
 							localStorage.setItem('token',res.token);
 							this.$store.commit('LoginInfo',res);
 							uni.navigateTo({
-								url: '../pages/index/HomePage'
+								url: '../pages/index/HomePage/index'
 							});
 							
 							// setTimeout(()=>{//登录超时

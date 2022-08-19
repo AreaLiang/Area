@@ -3,6 +3,7 @@
 		<!-- <view class="not-login-box login-status">
 			<img src="/static/login.png" alt="" @click="login()">
 		</view> -->
+		
 		<uni-row class="logged-box login-status">
 			<uni-col :span="6">
 				<view class="portrait-box">
@@ -12,11 +13,11 @@
 			<uni-col :span="18">
 				<view class="userInfo-box">
 					<view class="user-name">
-						<view class="">
+						<view>
 							AreaLiang
-							<uni-icons type="right" size="4vw"></uni-icons>
+							<uni-icons type="right" size="1rem"></uni-icons>
 						</view>
-						<view class="apply-certification">
+						<view class="apply-certification" @click="applyCertification">
 							申请认证
 						</view>
 					</view>
@@ -44,7 +45,7 @@
 						<uni-grid-item v-for="(item, index) in commonFunctions" :index="index" :key="index">
 							<navigator :url="item.url">
 								<view class="grid-item-box">
-									<uni-icons custom-prefix="iconfont" :type="item.icon" size="6vw" color="#777" />
+									<uni-icons custom-prefix="iconfont" :type="item.icon" size="1.5rem" color="#777" />
 									<text class="text">{{item.name}}</text>
 								</view>
 							</navigator>
@@ -57,7 +58,7 @@
 						<uni-grid-item v-for="(item, index) in moreFunctions" :index="index" :key="index">
 							<navigator :url="item.url">
 								<view class="grid-item-box">
-									<uni-icons custom-prefix="iconfont" :type="item.icon" size="6vw" color="#777" />
+									<uni-icons custom-prefix="iconfont" :type="item.icon" size="1.5rem" color="#777" />
 									<text class="text">{{item.name}}</text>
 								</view>
 							</navigator>
@@ -154,10 +155,12 @@
 				uni.navigateTo({
 					url: '/src/pages/Login'
 				})
+			},
+			applyCertification(){//申请认证
+				uni.navigateTo({
+					url: '/src/pages/index/User/ApplyForCertification'
+				})
 			}
-		},
-		components: {
-
 		}
 	}
 </script>
@@ -186,8 +189,8 @@
 		color: #2c2c2c;
 
 		.portrait-box {
-			width: 18vw;
-			height: 18vw;
+			width: 4.5rem;
+			height: 4.5rem;
 			border-radius: 50%;
 			border: 1px solid #e1dfdf;
 		}
@@ -199,7 +202,6 @@
 		}
 
 		.user-name {
-			font-size: 5vw;
 			font-weight: 600;
 			display: flex;
 			justify-content: space-between;
@@ -208,11 +210,11 @@
 		.apply-certification {
 			background: #fdeaea;
 			border-radius: 10px 0 0 10px;
-			width: 20vw;
-			height: 7vw;
-			font-size: 4vw;
+			width: 5rem;
+			height: 2rem;
+			font-size: 1rem;
 			text-align: center;
-			line-height: 7vw;
+			line-height: 2rem;
 			color: #fb6161;
 			font-weight: 500;
 		}
@@ -234,7 +236,7 @@
 
 	.login-status {
 		background-color: white;
-		height: 25vw;
+		height: 6.25rem;
 	}
 
 
@@ -248,8 +250,8 @@
 	}
 
 	.text {
-		font-size: 4vw;
-		margin-top: 4vw;
+		font-size: 1rem;
+		margin-top: 1rem;
 	}
 
 	.example-body {
@@ -300,29 +302,29 @@
 	}
 
 	/* #ifdef H5 */
-	@media screen and (max-width: 450px) {
-		.logged-box {
-			.user-name {
-				font-size: 20px;
-			}
+	// @media screen and (max-width: 450px) {
+	// 	.logged-box {
+	// 		.user-name {
+	// 			font-size: 20px;
+	// 		}
 
-			.notice-box {
-				font-size: 18px;
-			}
-		}
-	}
+	// 		.notice-box {
+	// 			font-size: 14px;
+	// 		}
+	// 	}
+	// }
 
-	@media screen and (min-width: 768px) and (max-width: 1425px) {
-		.swiper {
-			height: 630px;
-		}
-	}
+	// @media screen and (min-width: 768px) and (max-width: 1425px) {
+	// 	.swiper {
+	// 		height: 630px;
+	// 	}
+	// }
 
-	@media screen and (min-width: 1425px) {
-		.swiper {
-			height: 830px;
-		}
-	}
+	// @media screen and (min-width: 1425px) {
+	// 	.swiper {
+	// 		height: 830px;
+	// 	}
+	// }
 
 	/* #endif */
 </style>

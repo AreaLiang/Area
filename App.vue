@@ -20,10 +20,13 @@
 	// 设置整个项目的背景色
 	page {
 		// background-color: #f5f5f5;
-		font-size: 4vw;
+		font-size: 1.1rem;
 		height: 100%;
 	}
-
+	html{
+		font-size:4vw;
+	}
+	
 	/* #endif */
 	.example-info {
 		font-size: 14px;
@@ -38,4 +41,10 @@
 		background-color: transparent;
 	}
 	
+	// @media screen and (min-width:321px) and (max-width:375px){font-size:11px;}
+	// @media screen and (min-width:376px) and (max-width:414px){font-size:11px;}
+	// @media screen and (min-width:415) and (max-width:639px){font-size:11px;}
+	// @media screen and (min-width:640) and (max-width:719px){font-size:11px;}
+	// @media screen and (min-width:720px) and (max-width:749px){font-size:11px;}
+	// @media screen and (min-width:750px) and (max-width:799px){font-size:11px;}
 </style>

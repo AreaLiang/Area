@@ -36,29 +36,32 @@ app.get('/areaList', (req, res) => {
 	res.send(postData);
 })
 
+let userInfo = Mock.mock({
+	"aa|5": [{
+		"number|1-100": 60,
+		"city|1": {
+			"310000": "上海市",
+			"320000": "江苏省",
+			"330000": "浙江省",
+			"340000": "安徽省",
+			"350000": "广东省",
+			"360000": "湖北省"
+		},
+		'phone|1': "req.body.userId",
+		'data': '@datetime',
+		'id': '@increment'
+	}],
+	"setting":{
+		fontsize:"中"
+	}
+});
+
 //登录
 app.post('/login', (req, res) => {
 	let token = createToken('', 3600);
 	let postData = new resFun(req.body, "成功");
 	if (req.body.userId == "user001" && req.body.passWord == "ab12345") {
-
-		let userInfo = Mock.mock({
-			"aa|5": [{
-				"number|1-100": 60,
-				"city|1": {
-					"310000": "上海市",
-					"320000": "江苏省",
-					"330000": "浙江省",
-					"340000": "安徽省",
-					"350000": "广东省",
-					"360000": "湖北省"
-				},
-				'phone|1': req.body.userId,
-				'data': '@datetime',
-				'id': '@increment'
-			}]
-		})
-
+		
 		postData.data = Object.assign(postData.data, userInfo);
 		postData.token = token;
 
@@ -78,26 +81,9 @@ app.post('/checkInfo', (req, res) => {
 	}.authorization;
 	if (tokenExp(token).value) {
 		let postData = new resFun(req.body, "成功");
-		let userInfo = Mock.mock({
-			"aa|5": [{
-				"number|1-100": 60,
-				"city|1": {
-					"310000": "上海市",
-					"320000": "江苏省",
-					"330000": "浙江省",
-					"340000": "安徽省",
-					"350000": "广东省",
-					"360000": "湖北省"
-				},
-				'phone|1': "req.body.userId",
-				'data': '@datetime',
-				'id': '@increment'
-			}]
-		})
 
 		postData.data = Object.assign(postData.data, userInfo);
 		postData.token = token;
-
 
 		setTimeout(() => {
 			res.send(postData);
@@ -240,6 +226,15 @@ app.post('/getHotList', (req, res) => {
 	postData = Object.assign(postData, req.body);
 
 	res.send(postData);
+})
+
+//系统设置 修改字体大小
+app.post('/setting', (req, res) => {
+	let size = req.body.size || "中";
+	
+	userInfo.setting.fontsize=size;
+
+	res.send(commonPost.success());
 })
 
 let areaBackToken='';
