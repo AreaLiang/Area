@@ -1,5 +1,5 @@
 <template>
-	<view class="userPage">
+	<view class="userPage" :class="isDark?'dark':''">
 		<!-- <view class="not-login-box login-status">
 			<img src="/static/login.png" alt="" @click="login()">
 		</view> -->
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+	import {mapGetters,mapState} from 'vuex'
 	export default {
 		name: 'User',
 		data() {
@@ -113,7 +114,7 @@
 					{
 						name: "系统设置",
 						icon: "icon-xitong",
-						url: "src/pages/index/User/SystemSettings"
+						url: "src/pages/index/User/SystemSettings/index"
 					}
 				],
 				moreFunctions: [{
@@ -149,6 +150,9 @@
 
 				]
 			}
+		},
+		computed:{
+			...mapState(['isDark'])
 		},
 		methods: {
 			login() {

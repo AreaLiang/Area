@@ -1,5 +1,5 @@
 <template>
-	<view class="hostlist">
+	<view class="hostlist" :class="isDark?'dark':''">
 		<searchbox searchPlaceholder="TV9833航班大火被扑灭" /><!-- 搜索框 -->
 		<view class="top-img">
 			<img src="/static/hotList/hotListTop.jpg" alt="">
@@ -45,6 +45,7 @@
 	import {
 		getHotListApi
 	} from '@/request/api.js'
+	import {mapState} from 'vuex'
 	export default {
 		name: 'HotList',
 		data() {
@@ -54,6 +55,9 @@
 				page: 1,
 				showNumber: 15 //一页显示多少条数据
 			}
+		},
+		computed:{
+			...mapState(['isDark'])
 		},
 		methods: {
 			upper: function(e) {

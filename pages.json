@@ -69,7 +69,7 @@
 			}
 		},
 		{
-			"path": "src/pages/index/User/SystemSettings",
+			"path": "src/pages/index/User/SystemSettings/index",
 			"style": {
 				"navigationBarTitleText": "设置",
 				"navigationBarBackgroundColor": "white"
@@ -212,6 +212,26 @@
 		},
 		{
 			"path": "src/pages/index/HomePage/articleShow",//首页文章 二级页面
+			"style": {
+				"navigationBarTitleText": "", 
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/SystemSettings/Blacklist",//首页文章 二级页面
+			"style": {
+				"navigationBarTitleText": "", 
+				"navigationBarBackgroundColor": "white"
+			},
+			"meta": {
+				"needLogin": true
+			}
+		},
+		{
+			"path": "src/pages/index/User/SystemSettings/EditInformation",//首页文章 二级页面
 			"style": {
 				"navigationBarTitleText": "", 
 				"navigationBarBackgroundColor": "white"

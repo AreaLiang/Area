@@ -1,5 +1,5 @@
 <template>
-	<view class="vedioPage">
+	<view class="vedioPage" :class="isDark?'dark':''">
 		<view class="box-bg">
 			<searchbox searchPlaceholder="TV9833航班大火被扑灭" /><!-- 搜索框 -->
 		</view>
@@ -32,6 +32,7 @@
 <script>
 	import {getVedioApi} from '@/request/api.js'
 	import searchbox from '@/components/searchBox'
+	import {mapState} from 'vuex'
 	export default{
 		name:'VedioPage',
 		data(){
@@ -39,8 +40,8 @@
 				vedioData:[]
 			}
 		},
-		methods:{
-		
+		computed:{
+			...mapState(['isDark'])
 		},
 		components:{
 			searchbox

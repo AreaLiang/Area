@@ -1,14 +1,14 @@
 <template>
-	<view class="system-settings">
+	<view class="system-settings" :class="isDark?'dark':''">
 			<page-meta :root-font-size="getGlobalFontSize"></page-meta>
 		<uni-list class="list-box">
-			<uni-list-item showArrow title="编辑资料" />
+			<uni-list-item showArrow title="编辑资料" to="./EditInformation" />
 			<uni-list-item showArrow title="账号和隐私设置" />
-			<uni-list-item showArrow title="黑名单" />
+			<uni-list-item showArrow title="黑名单" to="./Blacklist" />
 		</uni-list>
 
 		<uni-list class="list-box">
-			<uni-list-item title="夜间模式" showSwitch></uni-list-item>
+			<uni-list-item title="夜间模式" showSwitch :switchChecked="isDark" @switchChange="switchDark"></uni-list-item>
 			<uni-list-item title="清除缓存" rightText="113.54MB" />
 			<picker @change="bindPickerChange" :value="index" :range="getGlobalFontCHList">
 				<uni-list-item title="字体大小" :rightText="fontSizeCh" />
@@ -16,7 +16,7 @@
 			<uni-list-item title="非WiFi网络流量" rightText="最佳效果(下载大图)" />
 			<uni-list-item title="非WiFi网络播放提醒" rightText="提醒一次" />
 			<uni-list-item title="推送通知" showSwitch></uni-list-item>
-			<uni-list-item title="提示语音开关" showSwitch switchChecked></uni-list-item>
+			<uni-list-item title="提示语音开关" showSwitch switchChecked ></uni-list-item>
 			<uni-list-item title="H5广告过滤" showSwitch switchChecked></uni-list-item>
 		</uni-list>
 
@@ -28,6 +28,7 @@
 		<view class="exit">
 			<navigator url="/src/pages/Login">退出登录</navigator>
 		</view>
+		
 	</view>
 </template>
 
@@ -48,7 +49,8 @@
 			...mapState({
 				getFontSizeCh:state =>{//更新字体大小设置显示
 					return state?.userData?.data?.setting?.fontsize || "中"
-				}
+				},
+				isDark:state=> state.isDark
 			})
 		},
 		methods: {
@@ -69,10 +71,13 @@
 						uni.showToast({title:"设置成功"})
 					}else{uni.showToast({title:"设置失败"})}
 				});		
+			},
+			switchDark(e){
+				this.$store.commit('switchDark',e.value);
 			}
 		},
 		mounted() {
-			this.index=this.getGlobalFontCHList.indexOf(this.getFontSizeCh);
+				this.index=this.getGlobalFontCHList.indexOf(this.getFontSizeCh);
 			this.fontSizeCh=this.getFontSizeCh;
 		},
 		mixins:[globalFontSize]
@@ -97,6 +102,7 @@
 			font-size: @fontSize  !important;
 		}
 	}
+	
 
 	.list-box {
 		margin-top: 10px;

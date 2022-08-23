@@ -1,5 +1,5 @@
 <template>
-	<view class="home-page">
+	<view class="home-page" :class="isDark?'dark':''">
 		<view class="box-bg">
 			<searchbox :searchPlaceholder="searchPlaceholder" /><!-- 搜索框 -->
 		</view>
@@ -138,7 +138,7 @@
 			
 		},
 		computed: {
-			...mapState(["userData"]),
+			...mapState(["userData","isDark"]),
 			searchPlaceholder() {
 				return {
 					...this.article[0]

@@ -1,0 +1,74 @@
+	@uni-list--border:#787676 !important;
+	@darkBorder:1px solid #525252 !important;
+	.darkStyle{
+		background-color:#333 !important;
+		color:#c1c1c1 !important;
+	}
+	
+	.dark{
+		img{
+			opacity: 0.5;
+		}
+		
+		//系统设置
+		.darkStyle();
+		.uni-list-item,
+		.uni-list-item__content-title,
+		.uni-card .uni-card__header .uni-card__header-content .uni-card__header-content-title,
+		.uni-card,
+		.login-status{
+			.darkStyle();
+		}
+		.exit{
+			background-color:#242424 !important;
+		}
+		.uni-list--border:after,
+		.uni-list--border-top,
+		.uni-list--border-bottom{
+			background-color:@uni-list--border
+		}
+		
+		//个人中心
+		.uni-card .uni-card__header{
+			border-bottom:@darkBorder !important;
+		}
+		.logged-box .portrait-box{
+			opacity: 0.5;
+		}
+		.logged-box .apply-certification{
+			background: #9f8b8b;
+			color: #892e2e;
+		}
+		
+		//热榜
+		.tip{
+			 background-color: #3e3e3e !important;
+			 color: #c3c3c3 !important;
+		}
+		.news-list .item{
+			border-bottom: @darkBorder;
+		}
+		
+		//首页
+		.content .item{
+			.darkStyle();
+			border-bottom: @darkBorder;
+		}
+		
+		//视频
+		.vedio-info{
+			.darkStyle();
+		}
+		
+		//顶部搜索栏
+		.uni-searchbar__box{
+			.darkStyle();
+		}
+		.box-bg{
+			background: #a54a48 !important;
+		}
+	}
+	
+	
+	
+	

@@ -1,7 +1,7 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch');
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -17,15 +17,20 @@
 	@import '@/uni_modules/uni-less/index.less';
 	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
+	/*夜间模式*/
+	@import '@/src/styles/darkStyle.less';
+	
 	// 设置整个项目的背景色
 	page {
 		// background-color: #f5f5f5;
 		font-size: 1.1rem;
 		height: 100%;
 	}
+	
 	html{
 		font-size:4vw;
 	}
+	
 	
 	/* #endif */
 	.example-info {

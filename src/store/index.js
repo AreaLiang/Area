@@ -20,11 +20,15 @@ const actions = {
 const mutations = {
 	LoginInfo(state, value) {//设置用户信息
 		state.userData=value;
+	},
+	switchDark(state, value){
+		state.isDark=value;
 	}
 }
 
 const state = {
-	userData : ''
+	userData : '',
+	isDark:false
 }
 
 const getters = {

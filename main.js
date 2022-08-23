@@ -7,7 +7,6 @@ import App from './App'
 import {router,RouterMount} from './src/router'  //路径换成自己的
 Vue.use(router)
 
-
 //引入store
 import store from './src/store'
 
